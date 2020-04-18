@@ -3,6 +3,9 @@ using SamOatesGames.Systems;
 
 public class EnemySpawnPoint : SubscribableMonoBehaviour
 {
+    [Header("Spawn Points")]
+    public Transform[] SpawnPoints;
+
     [Header("Spawn Settings")]
     public AnimationCurve EnemySpawnCurve;
     public int MaxWaves = 10;
@@ -39,7 +42,8 @@ public class EnemySpawnPoint : SubscribableMonoBehaviour
 
     private void SpawnEnemy()
     {
-        var enemyObj = Instantiate(EnemyPrefab, transform.position, Quaternion.identity, transform);
+        var spawnPoint = SpawnPoints[Random.Range(0, SpawnPoints.Length)];
+        var enemyObj = Instantiate(EnemyPrefab, spawnPoint.position, Quaternion.identity, transform);
 
         var controller = enemyObj.GetComponent<EnemyMovementController>();
         controller.CollisionMask = CollisionMask;
