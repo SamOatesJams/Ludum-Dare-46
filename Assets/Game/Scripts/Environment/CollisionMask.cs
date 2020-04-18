@@ -22,6 +22,16 @@ public class CollisionMask : MonoBehaviour
         
     }
 
+    public bool IsTileBlocked(Vector3Int location)
+    {
+        var tile = m_tilemap.GetTile(location);
+        if (tile == null)
+        {
+            return false;
+        }
+        return tile.name.Contains("_B_");
+    }
+
     public float GetMovementMultiplier(Vector3Int location)
     {
         var tile = m_tilemap.GetTile(location);

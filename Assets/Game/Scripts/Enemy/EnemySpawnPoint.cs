@@ -28,8 +28,6 @@ public class EnemySpawnPoint : SubscribableMonoBehaviour
     {
         m_eventAggregator = EventAggregator.GetInstance();
         m_eventAggregator.Subscribe<StartWaveEvent>(this, StartWave);
-
-        StartWave(new StartWaveEvent { Wave = 0 });
     }
 
     public void StartWave(StartWaveEvent e)

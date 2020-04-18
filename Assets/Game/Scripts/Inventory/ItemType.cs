@@ -3,5 +3,16 @@
     Wood,
     Stone,
     Metal,
-    Currency
+    Currency,
+
+    WoodSpike,
+    StoneSpike,
+    MetalSpike,
+
+    WoodFence,
+    StoneFence,
+    MetalFence,
+
+    GravelTrap,
+    TrapGrave,
 }
