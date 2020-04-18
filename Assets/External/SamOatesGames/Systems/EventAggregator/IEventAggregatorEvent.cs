@@ -1,3 +1,6 @@
-public interface IEventAggregatorEvent
+namespace SamOatesGames.Systems
 {
+    public interface IEventAggregatorEvent
+    {
+    }
 }
