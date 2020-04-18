@@ -1,68 +1,34 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
+using SamOatesGames.Systems;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : SubscribableMonoBehaviour
 {
-    public CollisionMask CollisionMask;
-    public Transform Target;
-    public float MovementSpeedMultiplier = 0.01f;
+    public double Health { get; private set; }
 
-    private NavAgent m_navAgent;
-    private Stack<Vector3> m_path;
+    public double MaxHealth = 20.0;
 
-    private Vector3 m_lastPosition;
-    private Vector3 m_currentTarget;
-    private float m_progress;
-    private bool m_endOfPath;
+    private EventAggregator m_eventAggregator;
 
-    // Start is called before the first frame update
     void Start()
     {
-        m_navAgent = new NavAgent(CollisionMask);
-        RecaluatePath();
+        m_eventAggregator = EventAggregator.GetInstance();
+        Health = MaxHealth;
     }
 
-    public void RecaluatePath()
+    void DamageEnemy(double damage)
     {
-        var position = new Vector3Int(Mathf.FloorToInt(transform.position.x), Mathf.FloorToInt(transform.position.y), 0);
-        var target = new Vector3Int(Mathf.FloorToInt(Target.position.x), Mathf.FloorToInt(Target.position.y), 0);
-        m_path = m_navAgent.CalculatePath(position, target);
+        Health -= damage;
 
-        Debug.Assert(m_path != null, "Could not find path to target");
-        NextPathNode();
-        m_endOfPath = false;
+        if (Health <= 0.0)
+        {
+            m_eventAggregator.Publish(new EnemyDeathEvent { Enemy = this });
+        }
     }
-
-    public void NextPathNode()
+    
+    void Update()
     {
-        if (m_path.Count == 0)
-        {
-            m_endOfPath = true;
-            return;
-        }
-
-        m_currentTarget = m_path.Pop();
-        m_lastPosition = transform.position;
-        m_progress = 0.0f;
-    }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        if (m_endOfPath)
-        {
-            return;
-        }
-
-        if (Vector2.Distance(m_currentTarget, transform.position) < 0.1f)
-        {
-            NextPathNode();
-        }
-
-        m_progress += MovementSpeedMultiplier * (1.0f / CollisionMask.GetMovementMultiplier(transform.position));
-
-        transform.position = m_lastPosition + ((m_currentTarget - m_lastPosition) * m_progress);
+        
     }
 }
