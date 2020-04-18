@@ -67,33 +67,34 @@ public class FollowTransform : SubscribableMonoBehaviour
         m_targetPosition = m_targetTransform.position + Offset;
 
         var oldPosition = transform.position;
-        transform.position = Vector3.SmoothDamp(oldPosition, m_targetPosition, ref m_currentVelocity, Smoothness);
+        var newPosition = Vector3.SmoothDamp(oldPosition, m_targetPosition, ref m_currentVelocity, Smoothness);
         
         if (m_mapBounds.HasValue)
         {
             var mapBounds = m_mapBounds.Value;
-            var cameraBounds = CalculateCameraBounds();
+            var cameraBounds = CalculateCameraBounds(newPosition);
 
-            if (!mapBounds.Contains(cameraBounds.min))
+            if (cameraBounds.min.x < mapBounds.min.x || cameraBounds.max.x > mapBounds.max.x)
             {
-                transform.position = oldPosition;
+                newPosition = new Vector3(oldPosition.x, newPosition.y, newPosition.z);
             }
 
-            if (!mapBounds.Contains(cameraBounds.max))
+            if (cameraBounds.min.y < mapBounds.min.y || cameraBounds.max.y > mapBounds.max.y)
             {
-                transform.position = oldPosition;
+                newPosition = new Vector3(newPosition.x, oldPosition.y, newPosition.z);
             }
         }
+
+        transform.position = newPosition;
     }
 
-    private Bounds CalculateCameraBounds()
+    private Bounds CalculateCameraBounds(Vector3 targetPosition)
     {
         var screenAspect = Screen.width / Screen.height;
         var cameraHeight = m_camera.orthographicSize * 2.0f;
-        var cameraPosition = m_camera.transform.position;
 
         return new Bounds(
-            new Vector3(cameraPosition.x, cameraPosition.y, 0.0f), 
+            new Vector3(targetPosition.x, targetPosition.y, 0.0f), 
             new Vector3(cameraHeight * screenAspect, cameraHeight, 0.0f)
         );
     }
