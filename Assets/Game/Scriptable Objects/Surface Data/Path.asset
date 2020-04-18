@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8512d4a1f99fd54da940a00c79f9ee5, type: 3}
-  m_Name: Environment Surface Data
+  m_Script: {fileID: 11500000, guid: 8f8f7a24bd0e8af48be4d9c59f318c7d, type: 3}
+  m_Name: Path
   m_EditorClassIdentifier: 
-  Data:
-  - {fileID: 11400000, guid: 655a62060db2401409a59801913b0a88, type: 2}
-  - {fileID: 11400000, guid: 2ca5b9c1c1b30724bb139d43a7c7dc0f, type: 2}
+  SurfaceName: CM_Path
+  MovementModifier: 1

@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [RequireComponent(typeof(Tilemap))]
 public class CollisionMask : MonoBehaviour
 {
-    public EnvironmentSurfaceData SurfaceData;
+    public EnvironmentSurfaceDataCollection SurfaceData;
 
     private Tilemap m_tilemap;
 
@@ -14,12 +12,6 @@ public class CollisionMask : MonoBehaviour
     void Start()
     {
         m_tilemap = GetComponent<Tilemap>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public bool IsTileBlocked(Vector3Int location)
