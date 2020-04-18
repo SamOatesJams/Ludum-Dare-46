@@ -22,7 +22,11 @@ public class EnemyMovementController : MonoBehaviour
     void Start()
     {
         m_navAgent = new NavAgent(CollisionMask);
-        RecaluatePath();
+
+        if (Target != null)
+        {
+            RecaluatePath();
+        }
     }
 
     public void RecaluatePath()
@@ -52,6 +56,12 @@ public class EnemyMovementController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (CollisionMask == null)
+        {
+            Debug.LogWarning($"No '{nameof(CollisionMask)}' is set on '{nameof(EnemyMovementController)}:{name}'");
+            return;
+        }
+
         if (m_endOfPath)
         {
             return;
