@@ -5,9 +5,9 @@
     Metal,
     Currency,
 
-    WoodSpike,
-    StoneSpike,
-    MetalSpike,
+    WoodSpikes,
+    StoneSpikes,
+    MetalSpikes,
 
     WoodFence,
     StoneFence,

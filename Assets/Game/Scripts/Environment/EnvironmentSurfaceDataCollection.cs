@@ -6,15 +6,22 @@ public class EnvironmentSurfaceDataCollection : ScriptableObject
 {
     public EnvironmentSurfaceData[] Data;
 
-    public float GetMovementModifier(string surfaceName)
+    public EnvironmentSurfaceData GetSurfaceData(string surfaceName)
     {
         var data = Data.FirstOrDefault(x => x.SurfaceName == surfaceName);
+
         if (data == null)
         {
             Debug.LogWarning($"Failed to find movement modifier for the surface '{surfaceName}'");
-            return float.PositiveInfinity;
+            return null;
         }
 
-        return data.MovementModifier;
+        return data;
+    }
+
+    public float GetMovementModifier(string surfaceName)
+    {
+        var data = GetSurfaceData(surfaceName);
+        return data == null ? data.MovementModifier : float.PositiveInfinity;
     }
 }
