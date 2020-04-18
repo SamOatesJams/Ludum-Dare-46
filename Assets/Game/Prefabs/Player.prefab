@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 1790178350051720849}
   - component: {fileID: 1790178350051720862}
   - component: {fileID: 9151566567866940423}
+  - component: {fileID: 800294155954074509}
+  - component: {fileID: 8381857615956661590}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -115,3 +117,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cd92c4f1d26ff242a53564263ecf429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &800294155954074509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790178350051720863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1762a828996a624a96a396d4abc5ee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxPlacementDistance: 2
+  CurrentHeldItem: {fileID: 7024234245917451659, guid: dea88a52412695144b90c56f9e6474b6,
+    type: 3}
+  HighlightTileGreen: {fileID: 11400000, guid: b5839e9927e8c9446937992dd243073f, type: 2}
+  HighlightTileBlocked: {fileID: 11400000, guid: 0e69664385a0b8a4392945769a32b207,
+    type: 2}
+  CollisionMask: {fileID: 0}
+  HighlightLayer: {fileID: 0}
+--- !u!114 &8381857615956661590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790178350051720863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 38867031aa9d0be41b28831ddc5085a1,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
