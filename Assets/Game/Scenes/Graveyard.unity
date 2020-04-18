@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -5794,9 +5794,10 @@ MonoBehaviour:
   MaxPlacementDistance: 2
   CurrentHeldItem: {fileID: 7024234245917451659, guid: dea88a52412695144b90c56f9e6474b6,
     type: 3}
-  HighlightTileGreen: {fileID: 0}
-  HighlightTileBlocked: {fileID: 0}
-  CollisionMask: {fileID: 0}
+  HighlightTileGreen: {fileID: 11400000, guid: b5839e9927e8c9446937992dd243073f, type: 2}
+  HighlightTileBlocked: {fileID: 11400000, guid: 0e69664385a0b8a4392945769a32b207,
+    type: 2}
+  CollisionMask: {fileID: 661447471}
   HighlightLayer: {fileID: 1909249175}
 --- !u!114 &1365056506
 MonoBehaviour:
