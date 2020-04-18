@@ -42,7 +42,10 @@ public class EnemySpawnPoint : SubscribableMonoBehaviour
 
     private void SpawnEnemy()
     {
-        var spawnPoint = SpawnPoints[Random.Range(0, SpawnPoints.Length)];
+        var spawnPoint = SpawnPoints == null || SpawnPoints.Length == 0 
+            ? transform 
+            : SpawnPoints[Random.Range(0, SpawnPoints.Length)];
+
         var enemyObj = Instantiate(EnemyPrefab, spawnPoint.position, Quaternion.identity, transform);
 
         var controller = enemyObj.GetComponent<EnemyMovementController>();
