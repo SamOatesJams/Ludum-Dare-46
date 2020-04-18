@@ -67,4 +67,14 @@ public class EnemySpawnPoint : SubscribableMonoBehaviour
             m_spawnTicksRemaining = Mathf.FloorToInt(EnemySpawnDelayTicks + (Random.value * RandomSpawnTicksMultiplier));
         }
     }
+
+#if UNITY_EDITOR
+    private void OnGUI()
+    {
+        if (GUI.Button(new Rect(10, 70, 140, 30), "Spawn Wave"))
+        {
+            m_eventAggregator.Publish(new StartWaveEvent());
+        }
+    }
+#endif
 }

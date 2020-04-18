@@ -9,6 +9,8 @@ public class RequestNighttimeEvent : IEventAggregatorEvent { }
 
 public class DayNightLightingSystem : SubscribableMonoBehaviour
 {
+    private EventAggregator m_eventAggregator;
+
     [Header("Light Sources")]
     public Light2D SunLight;
     public Light2D MoonLight;
@@ -21,9 +23,9 @@ public class DayNightLightingSystem : SubscribableMonoBehaviour
 
     public void Start()
     {
-        var eventAggregator = EventAggregator.GetInstance();
-        eventAggregator.Subscribe<RequestDaytimeEvent>(this, OnRequestDaytimeEvent);
-        eventAggregator.Subscribe<RequestNighttimeEvent>(this, OnRequestNighttimeEvent);
+        m_eventAggregator = EventAggregator.GetInstance();
+        m_eventAggregator.Subscribe<RequestDaytimeEvent>(this, OnRequestDaytimeEvent);
+        m_eventAggregator.Subscribe<RequestNighttimeEvent>(this, OnRequestNighttimeEvent);
 
         DefaultAllLighting();
     }
@@ -40,16 +42,16 @@ public class DayNightLightingSystem : SubscribableMonoBehaviour
             torchLight.Light.intensity = 0.0f;
         }
 
-        InterpolateLightSource(value => SunLight.intensity = value, 0.0f, SunLightIntensity);
+        InterpolateValue(value => SunLight.intensity = value, 0.0f, SunLightIntensity);
     }
 
     private void OnRequestDaytimeEvent(RequestDaytimeEvent args)
     {
-        InterpolateLightSource(value => SunLight.intensity = value, 0.0f, SunLightIntensity);
-        InterpolateLightSource(value => MoonLight.intensity = value, MoonLightIntensity, 0.0f);
+        InterpolateValue(value => SunLight.intensity = value, 0.0f, SunLightIntensity);
+        InterpolateValue(value => MoonLight.intensity = value, MoonLightIntensity, 0.0f);
         foreach (var torchLight in TorchLights)
         {
-            InterpolateLightSource(value =>
+            InterpolateValue(value =>
             {
                 torchLight.Light.intensity = value;
                 if (value < 0.5f)
@@ -62,11 +64,11 @@ public class DayNightLightingSystem : SubscribableMonoBehaviour
 
     private void OnRequestNighttimeEvent(RequestNighttimeEvent args)
     {
-        InterpolateLightSource(value => SunLight.intensity = value, SunLightIntensity, 0.0f);
-        InterpolateLightSource(value => MoonLight.intensity = value, 0.0f, MoonLightIntensity);
+        InterpolateValue(value => SunLight.intensity = value, SunLightIntensity, 0.0f);
+        InterpolateValue(value => MoonLight.intensity = value, 0.0f, MoonLightIntensity);
         foreach (var torchLight in TorchLights)
         {
-            InterpolateLightSource(value =>
+            InterpolateValue(value =>
             {
                 torchLight.Light.intensity = value;
                 if (value > 0.5f)
@@ -75,9 +77,17 @@ public class DayNightLightingSystem : SubscribableMonoBehaviour
                 }
             }, 0.0f, TorchLightIntensity);
         }
+
+        InterpolateValue(value =>
+        {
+            if (value >= 0.9f)
+            {
+                m_eventAggregator.Publish(new StartWaveEvent());
+            }
+        }, 0.0f, 1.0f);
     }
 
-    private void InterpolateLightSource(Action<float> valueAction, float start, float end)
+    private void InterpolateValue(Action<float> valueAction, float start, float end)
     {
         StartCoroutine(InterpolateLightSourceCoroutine(valueAction, start, end));
     }
@@ -98,17 +108,17 @@ public class DayNightLightingSystem : SubscribableMonoBehaviour
     }
 
 #if UNITY_EDITOR
-    //private void OnGUI()
-    //{
-    //    if (GUI.Button(new Rect(10, 30, 140, 30), "Request Daytime"))
-    //    {
-    //        OnRequestDaytimeEvent(new RequestDaytimeEvent());
-    //    }
+    private void OnGUI()
+    {
+        if (GUI.Button(new Rect(10, 30, 140, 30), "Request Daytime"))
+        {
+            OnRequestDaytimeEvent(new RequestDaytimeEvent());
+        }
 
-    //    if (GUI.Button(new Rect(160, 30, 140, 30), "Request Nighttime"))
-    //    {
-    //        OnRequestNighttimeEvent(new RequestNighttimeEvent());
-    //    }
-    //}
+        if (GUI.Button(new Rect(160, 30, 140, 30), "Request Nighttime"))
+        {
+            OnRequestNighttimeEvent(new RequestNighttimeEvent());
+        }
+    }
 #endif
 }
