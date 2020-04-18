@@ -12,6 +12,7 @@ public class EnvironmentSurfaceData : ScriptableObject
         var i = SurfaceTypes.IndexOf(surfaceName);
         if (i == -1)
         {
+            Debug.LogWarning($"Failed to find movement modifier for the surface '{surfaceName}'");
             return float.PositiveInfinity;
         }
         return SurfaceMovementModifiers[i];
