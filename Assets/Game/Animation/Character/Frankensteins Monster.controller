@@ -46,7 +46,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 5774762307459154211, guid: 3352337b49e259244b3f68c8d3eb990e,
+  m_Motion: {fileID: 5774762307459154211, guid: 0a6bba3a3b690b14f84ca061c07d846a,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -74,7 +74,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 3296834035365083643, guid: 3352337b49e259244b3f68c8d3eb990e,
+  m_Motion: {fileID: 3296834035365083643, guid: 0a6bba3a3b690b14f84ca061c07d846a,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -137,7 +137,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Villager
+  m_Name: Frankensteins Monster
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: WalkUp
@@ -145,19 +145,19 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: WalkDown
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: WalkSide
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -194,7 +194,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -3100369314251171874, guid: 3352337b49e259244b3f68c8d3eb990e,
+  m_Motion: {fileID: -3100369314251171874, guid: 0a6bba3a3b690b14f84ca061c07d846a,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -253,7 +253,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -981577595822735337, guid: 3352337b49e259244b3f68c8d3eb990e,
+  m_Motion: {fileID: -981577595822735337, guid: 0a6bba3a3b690b14f84ca061c07d846a,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
