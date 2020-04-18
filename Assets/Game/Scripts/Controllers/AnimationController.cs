@@ -10,6 +10,10 @@ public class AnimationController : MonoBehaviour
     private Animator m_animator;
     private SpriteRenderer m_renderer;
 
+    public static readonly int WalkUpAnimationBool = Animator.StringToHash("WalkUp");
+    public static readonly int WalkDownAnimationBool = Animator.StringToHash("WalkDown");
+    public static readonly int WalkSideAnimationBool = Animator.StringToHash("WalkSide");
+
     void Start()
     {
         m_animator = GetComponent<Animator>();
@@ -55,9 +59,9 @@ public class AnimationController : MonoBehaviour
             }
         }
 
-        m_animator.SetBool("WalkUp", walkUp);
-        m_animator.SetBool("WalkSide", walkSide);
-        m_animator.SetBool("WalkDown", walkDown);
+        m_animator.SetBool(WalkUpAnimationBool, walkUp);
+        m_animator.SetBool(WalkDownAnimationBool, walkDown);
+        m_animator.SetBool(WalkSideAnimationBool, walkSide);
 
         m_lastPosition = transform.position;
     }

@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Placed Item");
             var obj = Instantiate(CurrentHeldItem, tileCentre, Quaternion.identity, null);
+            
         }
         else
         {

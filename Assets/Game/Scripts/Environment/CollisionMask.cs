@@ -23,7 +23,7 @@ public class CollisionMask : MonoBehaviour
         }
         return tile.name.Contains("_B_");
     }
-
+    
     public float GetMovementMultiplier(Vector3Int location)
     {
         var tile = m_tilemap.GetTile(location);
