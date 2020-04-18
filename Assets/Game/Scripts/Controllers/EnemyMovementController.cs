@@ -8,6 +8,7 @@ public class EnemyMovementController : MonoBehaviour
     public CollisionMask CollisionMask;
     public Transform Target;
     public float MovementSpeedMultiplier = 0.01f;
+    public float SurfaceSpeedModifier = 0.1f;
 
     private NavAgent m_navAgent;
     private Stack<Vector3> m_path;
@@ -61,8 +62,7 @@ public class EnemyMovementController : MonoBehaviour
             NextPathNode();
         }
 
-        m_progress += MovementSpeedMultiplier * (1.0f / CollisionMask.GetMovementMultiplier(transform.position));
-
+        m_progress += MovementSpeedMultiplier * (1.0f / (CollisionMask.GetMovementMultiplier(transform.position) * SurfaceSpeedModifier));
         transform.position = m_lastPosition + ((m_currentTarget - m_lastPosition) * m_progress);
     }
 }

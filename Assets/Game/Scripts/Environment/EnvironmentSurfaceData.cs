@@ -9,6 +9,11 @@ public class EnvironmentSurfaceData : ScriptableObject
 
     public float GetMovementModifier(string surfaceName)
     {
-        return SurfaceMovementModifiers[SurfaceTypes.IndexOf(surfaceName)];
+        var i = SurfaceTypes.IndexOf(surfaceName);
+        if (i == -1)
+        {
+            return float.PositiveInfinity;
+        }
+        return SurfaceMovementModifiers[i];
     }
 }
