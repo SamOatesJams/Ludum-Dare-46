@@ -5,8 +5,8 @@ using UnityEngine.Tilemaps;
 
 public class EnemyController : MonoBehaviour
 {
-    public Tilemap CollisionMask;
-    public Vector2Int Target;
+    public CollisionMask CollisionMask;
+    public Transform Target;
     public float MovementSpeedMultiplier = 0.01f;
 
     private NavAgent m_navAgent;
@@ -26,8 +26,9 @@ public class EnemyController : MonoBehaviour
 
     public void RecaluatePath()
     {
-        var position = new Vector2Int(Mathf.FloorToInt(transform.position.x), Mathf.FloorToInt(transform.position.y));
-        m_path = m_navAgent.CalculatePath(position, Target);
+        var position = new Vector3Int(Mathf.FloorToInt(transform.position.x), Mathf.FloorToInt(transform.position.y), 0);
+        var target = new Vector3Int(Mathf.FloorToInt(Target.position.x), Mathf.FloorToInt(Target.position.y), 0);
+        m_path = m_navAgent.CalculatePath(position, target);
 
         Debug.Assert(m_path != null, "Could not find path to target");
         NextPathNode();
@@ -60,7 +61,8 @@ public class EnemyController : MonoBehaviour
             NextPathNode();
         }
 
-        m_progress += MovementSpeedMultiplier;
+        m_progress += MovementSpeedMultiplier * (1.0f / CollisionMask.GetMovementMultiplier(transform.position));
+
         transform.position = m_lastPosition + ((m_currentTarget - m_lastPosition) * m_progress);
     }
 }
