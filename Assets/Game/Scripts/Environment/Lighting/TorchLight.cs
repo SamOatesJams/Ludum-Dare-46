@@ -5,8 +5,19 @@ using UnityEngine.Experimental.Rendering.Universal;
 public class TorchLight : MonoBehaviour
 {
     private Animator m_animator;
-    
-    public Light2D Light { get; private set; }
+    private Light2D m_light;
+
+    public Light2D Light
+    {
+        get
+        {
+            if (m_light == null)
+            {
+                m_light = GetComponentInChildren<Light2D>();
+            }
+            return m_light;
+        }
+    }
 
     public static readonly int LitAnimationBool = Animator.StringToHash("Lit");
 
@@ -14,7 +25,7 @@ public class TorchLight : MonoBehaviour
     public void Start()
     {
         m_animator = GetComponent<Animator>();
-        Light = GetComponentInChildren<Light2D>();
+        m_light = Light;
     }
 
     public void LightTorch()
