@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 [RequireComponent(typeof(Tilemap))]
 public class CollisionMask : MonoBehaviour
 {
-    private readonly Dictionary<string, float> TileCosts = new Dictionary<string, float>();
+    public EnvironmentSurfaceData SurfaceData;
 
     private Tilemap m_tilemap;
 
@@ -14,11 +14,6 @@ public class CollisionMask : MonoBehaviour
     void Start()
     {
         m_tilemap = GetComponent<Tilemap>();
-
-        TileCosts.Add("CollisionMask_Path", 1.0f);
-        TileCosts.Add("CollisionMask_Grass", 5.0f);
-        TileCosts.Add("CollisionMask_Wall", 100.0f);
-        TileCosts.Add("CollisionMask_Fence", 50.0f);
     }
 
     // Update is called once per frame
@@ -30,11 +25,11 @@ public class CollisionMask : MonoBehaviour
     public float GetMovementMultiplier(Vector3Int location)
     {
         var tile = m_tilemap.GetTile(location);
-        if (tile == null || !TileCosts.ContainsKey(tile.name))
+        if (tile == null)
         {
             return float.PositiveInfinity;
         }
-        return TileCosts[tile.name];
+        return SurfaceData.GetMovementModifier(tile.name);
     }
 
     public float GetMovementMultiplier(Vector3 location)
