@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using SamOatesGames.Systems;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
+using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
@@ -25,6 +24,9 @@ public class PlayerController : MonoBehaviour
     {
         m_playerInput = GetComponent<PlayerInput>();
         m_movementAction = m_playerInput.currentActionMap.FindAction("Move");
+
+        var eventAggregator = EventAggregator.GetInstance();
+        eventAggregator.Publish(new SetCameraFollowTransformEvent(transform));
     }
 
     // Update is called once per frame
