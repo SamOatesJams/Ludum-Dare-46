@@ -2,5 +2,5 @@
 
 public class EnemyDeathEvent : IEventAggregatorEvent
 {
-    public Enemy Enemy { get; set; }
+    public EnemyController Enemy { get; set; }
 }
