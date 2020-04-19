@@ -33,18 +33,21 @@ public class PlayerController : SubscribableMonoBehaviour
     private EventAggregator m_eventAggregator;
 
     private SpriteRenderer m_placementPreview;
-    private Color m_disabledPreviewColor = new Color(1.0f, 1.0f, 1.0f, 0.25f);
+    private readonly Color m_disabledPreviewColor = new Color(1.0f, 1.0f, 1.0f, 0.25f);
 
     void Start()
     {
         m_playerInput = GetComponent<PlayerInput>();
         m_navigationController = GetComponent<NavMovementController>();
 
-        var placementPreview = new GameObject("_Placement_preview", typeof(SpriteRenderer));
-        m_placementPreview = placementPreview.GetComponent<SpriteRenderer>();
-        m_placementPreview.transform.SetParent(transform);
-        m_placementPreview.sortingOrder = 10000;
-        m_placementPreview.sprite = CurrentHeldItem.GetComponent<SpriteRenderer>().sprite;
+        if (PlayerType == PlayerType.Scientist)
+        {
+            var placementPreview = new GameObject("_Placement_preview", typeof(SpriteRenderer));
+            m_placementPreview = placementPreview.GetComponent<SpriteRenderer>();
+            m_placementPreview.transform.SetParent(transform);
+            m_placementPreview.sortingOrder = 10000;
+            m_placementPreview.sprite = CurrentHeldItem.GetComponent<SpriteRenderer>().sprite;
+        }
 
         m_playerInput.DeactivateInput();
 
@@ -61,6 +64,7 @@ public class PlayerController : SubscribableMonoBehaviour
         switch (PlayerType)
         {
             case PlayerType.Scientist:
+                m_placementPreview.enabled = false;
                 NavigateToTarget();
                 m_active = false;
                 m_playerInput.DeactivateInput();
@@ -80,6 +84,7 @@ public class PlayerController : SubscribableMonoBehaviour
         switch (PlayerType)
         {
             case PlayerType.Scientist:
+                m_placementPreview.enabled = true;
                 m_eventAggregator.Publish(new SetCameraFollowTransformEvent(transform));
                 m_active = true;
                 m_playerInput.ActivateInput();
@@ -158,6 +163,11 @@ public class PlayerController : SubscribableMonoBehaviour
 
     private void OnSwapItem(SwapItemEvent itemSwap)
     {
+        if (PlayerType != PlayerType.Scientist)
+        {
+            return;
+        }
+
         CurrentHeldItem = itemSwap.item;
         m_placementPreview.sprite = CurrentHeldItem.GetComponent<SpriteRenderer>().sprite;
     }
