@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: MetalFence
   m_EditorClassIdentifier: 
   MovementModifier: 5
-  PathCost: 300
+  PathCost: 50
   Blocked: 1
   CollisionMapTile: {fileID: 11400000, guid: b28537ed4790f0848b525be36e3f87a1, type: 2}

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: MetalSpikes
   m_EditorClassIdentifier: 
   MovementModifier: 5
-  PathCost: 300
+  PathCost: 50
   Blocked: 1
   CollisionMapTile: {fileID: 11400000, guid: 420b5e7bdb18fe04e959a6b24f465231, type: 2}

@@ -49,6 +49,7 @@ public class PlayerController : SubscribableMonoBehaviour
         m_eventAggregator = EventAggregator.GetInstance();
         m_eventAggregator.Subscribe<RequestDaytimeEvent>(this, OnRequestDaytimeEvent);
         m_eventAggregator.Subscribe<RequestNighttimeEvent>(this, OnRequestNighttimeEvent);
+        m_eventAggregator.Subscribe<SwapItemEvent>(this, OnSwapItem);
 
         OnRequestDaytimeEvent(new RequestDaytimeEvent());
     }
@@ -156,5 +157,10 @@ public class PlayerController : SubscribableMonoBehaviour
         }
 
         PlaceCurrentItem();
+    }
+
+    private void OnSwapItem(SwapItemEvent itemSwap)
+    {
+        CurrentHeldItem = itemSwap.item;
     }
 }
