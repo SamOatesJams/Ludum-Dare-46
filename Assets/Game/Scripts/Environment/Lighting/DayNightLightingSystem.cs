@@ -10,6 +10,7 @@ public class RequestNighttimeEvent : IEventAggregatorEvent { }
 public class DayNightLightingSystem : SubscribableMonoBehaviour
 {
     private EventAggregator m_eventAggregator;
+    private GameSession m_gameSession;
 
     [Header("Light Sources")]
     public Light2D SunLight;
@@ -27,6 +28,8 @@ public class DayNightLightingSystem : SubscribableMonoBehaviour
 
     public void Start()
     {
+        m_gameSession = GameSession.GetInstance();
+
         m_eventAggregator = EventAggregator.GetInstance();
         m_eventAggregator.Subscribe<RequestDaytimeEvent>(this, OnRequestDaytimeEvent);
         m_eventAggregator.Subscribe<RequestNighttimeEvent>(this, OnRequestNighttimeEvent);
@@ -92,7 +95,7 @@ public class DayNightLightingSystem : SubscribableMonoBehaviour
         {
             if (value >= 0.9f)
             {
-                m_eventAggregator.Publish(new StartWaveEvent());
+                m_eventAggregator.Publish(new StartWaveEvent(m_gameSession.Wave));
             }
         }, 0.0f, 1.0f);
     }

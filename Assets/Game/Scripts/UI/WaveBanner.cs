@@ -19,7 +19,7 @@ public class WaveBanner : SubscribableMonoBehaviour
 
     private void OnStartWaveEvent(StartWaveEvent args)
     {
-        BannerText.text = $"Wave {args.Wave}";
+        BannerText.text = $"Wave {args.Wave + 1}";
 
         var bannerTransform = (RectTransform)BannerImage.transform;
         StartCoroutine(MoveBanner(bannerTransform, bannerTransform.anchoredPosition.y, -bannerTransform.sizeDelta.y));

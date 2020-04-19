@@ -1,4 +1,5 @@
-﻿using SamOatesGames.Systems;
+﻿using System.Collections.Generic;
+using SamOatesGames.Systems;
 using SamOatesGames.Systems.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,11 +16,15 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
     }
 
     public GameStage Stage { get; private set; }
+    public int Wave { get; private set; }
 
-    public float StageLength { get; } = 60.0f;
+    public Dictionary<GameStage, float> StageLength { get; } = new Dictionary<GameStage, float>
+    {
+        { GameStage.Daytime, 30.0f },
+        { GameStage.Nighttime, 45.0f }
+    };
 
     private EventAggregator m_eventAggregator;
-    private InventorySystem m_inventorySystem;
 
     private float m_stageStartTime;
     private int m_numberOfLivingEnemies;
@@ -28,7 +33,6 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
     {
         base.ResolveSystems();
         m_eventAggregator = EventAggregator.GetInstance();
-        m_inventorySystem = InventorySystem.GetInstance();
     }
 
     public void Start()
@@ -45,6 +49,7 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
         m_eventAggregator.Subscribe<EnemySpawnEvent>(this, OnEnemySpawnEvent);
         m_eventAggregator.Subscribe<EnemyDeathEvent>(this, OnEnemyDeathEvent);
 
+        m_eventAggregator.Subscribe<EndWaveEvent>(this, OnEndWaveEvent);
         m_eventAggregator.Subscribe<NavigationCompleteEvent>(this, OnNavigationCompleteEvent);
         m_eventAggregator.Subscribe<GameOverEvent>(this, OnGameOverEvent);
     }
@@ -67,8 +72,13 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
 
     public float GetStageProgress()
     {
+        if (!StageLength.TryGetValue(Stage, out var stageLength))
+        {
+            return 0.0f;
+        }
+
         var currentTime = Time.time - m_stageStartTime;
-        var progress = Mathf.Max(currentTime / StageLength, 0.0f);
+        var progress = Mathf.Max(currentTime / stageLength, 0.0f);
         return progress;
     }
 
@@ -80,9 +90,15 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
                 m_eventAggregator.Publish(new RequestNighttimeEvent());
                 break;
             case GameStage.Nighttime:
-                m_eventAggregator.Publish(new RequestDaytimeEvent());
+                m_eventAggregator.Publish(new EndWaveEvent());
                 break;
         }
+    }
+
+    private void OnEndWaveEvent(EndWaveEvent args)
+    {
+        Wave++;
+        m_eventAggregator.Publish(new RequestDaytimeEvent());
     }
 
     private void OnNavigationCompleteEvent(NavigationCompleteEvent args)
@@ -114,6 +130,7 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
         Stage = GameStage.Daytime;
         m_stageStartTime = Time.time;
         m_numberOfLivingEnemies = 0;
+        Wave = 0;
         SceneManager.LoadScene("Game Scene");
     }
 
@@ -146,7 +163,7 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
 
         if (m_numberOfLivingEnemies == 0)
         {
-            m_eventAggregator.Publish(new RequestDaytimeEvent());
+            m_eventAggregator.Publish(new EndWaveEvent());
         }
     }
 }

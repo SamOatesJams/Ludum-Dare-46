@@ -2,5 +2,10 @@
 
 public class StartWaveEvent : IEventAggregatorEvent
 {
-    public int Wave { get; set; }
+    public int Wave { get; }
+
+    public StartWaveEvent(int wave)
+    {
+        Wave = wave;
+    }
 }
