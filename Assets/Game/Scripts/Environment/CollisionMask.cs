@@ -72,4 +72,19 @@ public class CollisionMask : MonoBehaviour
     {
         return GetMovementMultiplier(ToTilemapLoc(location));
     }
+
+    public float GetPathCost(Vector3Int location)
+    {
+        var tile = m_tilemap.GetTile(location);
+        if (tile == null)
+        {
+            return float.PositiveInfinity;
+        }
+        return SurfaceData.GetPathCost(tile.name);
+    }
+
+    public float GetPathCost(Vector3 location)
+    {
+        return GetPathCost(ToTilemapLoc(location));
+    }
 }

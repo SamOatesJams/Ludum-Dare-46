@@ -5,6 +5,8 @@ using UnityEngine.Tilemaps;
 public class EnvironmentSurfaceData : ScriptableObject
 {
     public float MovementModifier;
+    public float PathCost;
+
     public bool Blocked;
     public TileBase CollisionMapTile;
 
