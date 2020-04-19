@@ -20,6 +20,11 @@ public class InventoryItemLabel : SubscribableMonoBehaviour
 
     private void OnResourcePickupEvent(ResourcePickupEvent e)
     {
+        if (e.ResourceType != ResourceType)
+        {
+            return;
+        }
+
         UpdateItemLabel(e.TotalAmount);
     }
 
