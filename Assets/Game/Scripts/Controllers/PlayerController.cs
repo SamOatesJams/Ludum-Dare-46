@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using SamOatesGames.Systems;
+﻿using SamOatesGames.Systems;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
@@ -102,19 +101,22 @@ public class PlayerController : SubscribableMonoBehaviour
         var movement = m_movementAction.ReadValue<Vector2>();
         transform.position += new Vector3(movement.x, movement.y, 0);
 
-        var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos = new Vector3(mousePos.x, mousePos.y, 0);
-        var mouseTile = CollisionMask.ToTilemapLoc(mousePos);
-
-        var distance = Vector3.Distance(mousePos, transform.position);
-        var blocked = distance > MaxPlacementDistance || CollisionMask.IsTileBlocked(mouseTile);
-
-        if (m_lastHighlightTile != mouseTile || m_blocked != blocked)
+        if (PlayerType == PlayerType.Scientist)
         {
-            HighlightLayer.SetTile(m_lastHighlightTile, null);
-            HighlightLayer.SetTile(mouseTile, blocked ? HighlightTileBlocked : HighlightTileGreen);
-            m_lastHighlightTile = mouseTile;
-            m_blocked = blocked;
+            var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePos = new Vector3(mousePos.x, mousePos.y, 0);
+            var mouseTile = CollisionMask.ToTilemapLoc(mousePos);
+
+            var distance = Vector3.Distance(mousePos, transform.position);
+            var blocked = distance > MaxPlacementDistance || CollisionMask.IsTileBlocked(mouseTile);
+
+            if (m_lastHighlightTile != mouseTile || m_blocked != blocked)
+            {
+                HighlightLayer.SetTile(m_lastHighlightTile, null);
+                HighlightLayer.SetTile(mouseTile, blocked ? HighlightTileBlocked : HighlightTileGreen);
+                m_lastHighlightTile = mouseTile;
+                m_blocked = blocked;
+            }
         }
     }
 
@@ -128,13 +130,8 @@ public class PlayerController : SubscribableMonoBehaviour
         }
     }
 
-    public void OnPlaceItem(InputValue value)
+    public void PlaceCurrentItem()
     {
-        if (!m_active)
-        {
-            return;
-        }
-
         var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos = new Vector3(mousePos.x, mousePos.y, 0);
         var mouseTile = CollisionMask.ToTilemapLoc(mousePos);
@@ -146,13 +143,18 @@ public class PlayerController : SubscribableMonoBehaviour
 
         if (!blocked)
         {
-            Debug.Log("Placed Item");
-            var obj = Instantiate(CurrentHeldItem, tileCentre, Quaternion.identity, null);
+            Instantiate(CurrentHeldItem, tileCentre, Quaternion.identity, null);
             CollisionMask.SetTile(mouseTile, ItemType.WoodSpikes);
         }
-        else
+    }
+
+    public void OnPlaceItem(InputValue value)
+    {
+        if (PlayerType != PlayerType.Scientist || !m_active)
         {
-            Debug.Log("Blocked item");
+            return;
         }
+
+        PlaceCurrentItem();
     }
 }

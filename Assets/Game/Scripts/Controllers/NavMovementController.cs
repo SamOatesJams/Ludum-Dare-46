@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(-100)]
 public class NavMovementController : MonoBehaviour
 {
     [Header("World References")]
@@ -19,7 +20,7 @@ public class NavMovementController : MonoBehaviour
     private bool m_followingRoute;
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         m_navAgent = new NavAgent(CollisionMask);
         m_followingRoute = false;
