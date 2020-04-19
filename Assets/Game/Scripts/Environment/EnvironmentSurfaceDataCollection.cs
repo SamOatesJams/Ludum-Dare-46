@@ -22,6 +22,6 @@ public class EnvironmentSurfaceDataCollection : ScriptableObject
     public float GetMovementModifier(string surfaceName)
     {
         var data = GetSurfaceData(surfaceName);
-        return data == null ? data.MovementModifier : float.PositiveInfinity;
+        return data != null ? data.MovementModifier : float.PositiveInfinity;
     }
 }
