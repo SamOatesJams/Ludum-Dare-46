@@ -21,6 +21,10 @@ public class DayNightLightingSystem : SubscribableMonoBehaviour
     [Range(0.0f, 1.0f)] public float MoonLightIntensity;
     [Range(0.0f, 1.0f)] public float TorchLightIntensity;
 
+    [Header("Audio Clips")]
+    public AudioClip DaytimeAudio;
+    public AudioClip NighttimeAudio;
+
     public void Start()
     {
         m_eventAggregator = EventAggregator.GetInstance();
@@ -32,6 +36,8 @@ public class DayNightLightingSystem : SubscribableMonoBehaviour
 
     private void DefaultAllLighting()
     {
+        m_eventAggregator.Publish(new PlayAudioEvent(AudioIds.MenuTheme, DaytimeAudio, 0.75f, true));
+
         SunLight.enabled = true;
         SunLight.intensity = 0.0f;
         MoonLight.enabled = true;
@@ -47,6 +53,8 @@ public class DayNightLightingSystem : SubscribableMonoBehaviour
 
     private void OnRequestDaytimeEvent(RequestDaytimeEvent args)
     {
+        m_eventAggregator.Publish(new PlayAudioEvent(AudioIds.MenuTheme, DaytimeAudio, 0.75f, true));
+
         InterpolateValue(value => SunLight.intensity = value, 0.0f, SunLightIntensity);
         InterpolateValue(value => MoonLight.intensity = value, MoonLightIntensity, 0.0f);
         foreach (var torchLight in TorchLights)
@@ -64,6 +72,8 @@ public class DayNightLightingSystem : SubscribableMonoBehaviour
 
     private void OnRequestNighttimeEvent(RequestNighttimeEvent args)
     {
+        m_eventAggregator.Publish(new PlayAudioEvent(AudioIds.MenuTheme, NighttimeAudio, 0.75f, true));
+
         InterpolateValue(value => SunLight.intensity = value, SunLightIntensity, 0.0f);
         InterpolateValue(value => MoonLight.intensity = value, 0.0f, MoonLightIntensity);
         foreach (var torchLight in TorchLights)

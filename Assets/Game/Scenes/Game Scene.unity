@@ -523,6 +523,8 @@ MonoBehaviour:
   SunLightIntensity: 1
   MoonLightIntensity: 0.2
   TorchLightIntensity: 1
+  DaytimeAudio: {fileID: 8300000, guid: 9b524cc9ea146a64380d3113e3b9bd52, type: 3}
+  NighttimeAudio: {fileID: 8300000, guid: 53bdd6349b7893e498e171c121df3f32, type: 3}
 --- !u!1001 &119978463
 PrefabInstance:
   m_ObjectHideFlags: 0
