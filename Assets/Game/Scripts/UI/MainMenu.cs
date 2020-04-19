@@ -1,10 +1,17 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using SamOatesGames.Systems;
+using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
+    private EventAggregator m_eventAggregator;
+
+    public void Start()
+    {
+        m_eventAggregator = EventAggregator.GetInstance();
+    }
+
     public void OnBeginButtonClicked()
     {
-        SceneManager.LoadScene("Game Scene");
+        m_eventAggregator.Publish(new StartNewGameEvent());
     }
 }
