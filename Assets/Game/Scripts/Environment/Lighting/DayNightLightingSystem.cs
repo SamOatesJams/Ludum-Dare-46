@@ -106,19 +106,4 @@ public class DayNightLightingSystem : SubscribableMonoBehaviour
 
         yield return null;
     }
-
-#if UNITY_EDITOR
-    private void OnGUI()
-    {
-        if (GUI.Button(new Rect(10, 30, 140, 30), "Request Daytime"))
-        {
-            OnRequestDaytimeEvent(new RequestDaytimeEvent());
-        }
-
-        if (GUI.Button(new Rect(160, 30, 140, 30), "Request Nighttime"))
-        {
-            OnRequestNighttimeEvent(new RequestNighttimeEvent());
-        }
-    }
-#endif
 }
