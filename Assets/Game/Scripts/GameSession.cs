@@ -10,7 +10,8 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
     public enum GameStage
     {
         Daytime,
-        Nighttime
+        Nighttime,
+        GameOver
     }
 
     public GameStage Stage { get; private set; }
@@ -31,14 +32,15 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
 
     public void Start()
     {
-        Stage = GameStage.Daytime;
-        m_stageStartTime = Time.time;
-
         m_eventAggregator.Subscribe<StartNewGameEvent>(this, OnStartNewGameEvent);
         m_eventAggregator.Subscribe<StageTimeOverEvent>(this, OnStageTimeOverEvent);
 
         m_eventAggregator.Subscribe<RequestDaytimeEvent>(this, OnRequestDaytimeEvent);
         m_eventAggregator.Subscribe<RequestNighttimeEvent>(this, OnRequestNighttimeEvent);
+
+        m_eventAggregator.Subscribe<NavigationCompleteEvent>(this, OnNavigationCompleteEvent);
+
+        m_eventAggregator.Publish(new StartNewGameEvent());
     }
 
     public void OnDestroy()
@@ -77,9 +79,30 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
         }
     }
 
+    private void OnNavigationCompleteEvent(NavigationCompleteEvent args)
+    {
+        if (Stage == GameStage.GameOver)
+        {
+            return;
+        }
+
+        var enemy = args.GameObject.GetComponent<EnemyController>();
+        if (enemy == null)
+        {
+            return;
+        }
+
+        if (enemy.State == EnemyController.EnemyState.Attacking)
+        {
+            Stage = GameStage.GameOver;
+            m_eventAggregator.Publish(new GameOverEvent());
+        }
+    }
+
     private void OnStartNewGameEvent(StartNewGameEvent args)
     {
-        m_inventorySystem.ResetResources();
+        Stage = GameStage.Daytime;
+        m_stageStartTime = Time.time;
         SceneManager.LoadScene("Game Scene");
     }
 

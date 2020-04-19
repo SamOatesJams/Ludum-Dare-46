@@ -12,6 +12,7 @@ public class EnemyController : SubscribableMonoBehaviour
     }
 
     public double Health { get; private set; }
+    public EnemyState State => m_state;
 
     public double MaxHealth = 20.0;
     public GameObject ShadowBlob;
