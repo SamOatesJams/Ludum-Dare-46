@@ -43,6 +43,7 @@ public class PlayerController : SubscribableMonoBehaviour
 
     private NavMovementController m_navigationController;
     private EventAggregator m_eventAggregator;
+    private InventorySystem m_inventorySystem;
 
     private SpriteRenderer m_placementPreview;
     private readonly Color m_disabledPreviewColor = new Color(1.0f, 1.0f, 1.0f, 0.25f);
@@ -62,6 +63,8 @@ public class PlayerController : SubscribableMonoBehaviour
         }
 
         m_playerInput.DeactivateInput();
+
+        m_inventorySystem = InventorySystem.GetInstance();
 
         m_eventAggregator = EventAggregator.GetInstance();
         m_eventAggregator.Subscribe<RequestDaytimeEvent>(this, OnRequestDaytimeEvent);
@@ -156,16 +159,25 @@ public class PlayerController : SubscribableMonoBehaviour
         var distance = Vector3.Distance(tileCentre, transform.position);
         var blocked = distance > MaxPlacementDistance || CollisionMask.IsTileBlocked(mouseTile);
 
-        if (!blocked)
-        {
-            Instantiate(CurrentHeldItem.Prefab, tileCentre, Quaternion.identity, null);
-            CollisionMask.SetTile(mouseTile, CurrentHeldItem.Type);
-            m_eventAggregator.Publish(new PlayShiftedAudioEvent(AudioIds.PlaceItem, PlaceItemAudioClip, new Vector2(2.5f, 4.0f)));
-        }
-        else
+        if (blocked)
         {
             m_eventAggregator.Publish(new PlayShiftedAudioEvent(AudioIds.PlaceItem, FailedPlaceItemAudioClip, new Vector2(0.5f, 1.0f)));
+            return;
         }
+
+        var resourceCount = m_inventorySystem.GetItemAmount(CurrentHeldItem.ResourceUsed);
+        if (resourceCount < CurrentHeldItem.NumberOfResourcesUsed)
+        {
+            // TODO: New audio
+            m_eventAggregator.Publish(new PlayShiftedAudioEvent(AudioIds.PlaceItem, FailedPlaceItemAudioClip, new Vector2(0.5f, 1.0f)));
+            return;
+        }
+
+        Instantiate(CurrentHeldItem.Prefab, tileCentre, Quaternion.identity, null);
+        CollisionMask.SetTile(mouseTile, CurrentHeldItem.Type);
+        m_eventAggregator.Publish(new PlayShiftedAudioEvent(AudioIds.PlaceItem, PlaceItemAudioClip, new Vector2(2.5f, 4.0f)));
+
+        m_inventorySystem.UseItem(CurrentHeldItem.ResourceUsed, CurrentHeldItem.NumberOfResourcesUsed);
     }
 
     public void Attack()

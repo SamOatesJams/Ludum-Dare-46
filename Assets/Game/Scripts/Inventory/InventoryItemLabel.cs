@@ -15,10 +15,22 @@ public class InventoryItemLabel : SubscribableMonoBehaviour
         m_text = GetComponent<TMP_Text>();
         m_eventAggregator = EventAggregator.GetInstance();
         m_eventAggregator.Subscribe<ResourcePickupEvent>(this, OnResourcePickupEvent);
+        m_eventAggregator.Subscribe<ResourceUsedEvent>(this, OnResourceUsedEvent);
+
         UpdateItemLabel(InventorySystem.GetInstance().GetItemAmount(ResourceType));
     }
 
     private void OnResourcePickupEvent(ResourcePickupEvent e)
+    {
+        if (e.ResourceType != ResourceType)
+        {
+            return;
+        }
+
+        UpdateItemLabel(e.TotalAmount);
+    }
+
+    private void OnResourceUsedEvent(ResourceUsedEvent e)
     {
         if (e.ResourceType != ResourceType)
         {

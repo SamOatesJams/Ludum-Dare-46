@@ -43,6 +43,12 @@ public class InventorySystem : UnitySingleton<InventorySystem>, ISubscribable
         m_eventAggregator.Publish(new ResourcePickupEvent(type, amount, m_resourceCounts[type]));
     }
 
+    public void UseItem(ResourceType type, int amount)
+    {
+        m_resourceCounts[type] -= amount;
+        m_eventAggregator.Publish(new ResourceUsedEvent(type, amount, m_resourceCounts[type]));
+    }
+
     public int GetItemAmount(ResourceType type)
     {
         return m_resourceCounts[type];
