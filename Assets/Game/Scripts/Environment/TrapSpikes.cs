@@ -72,7 +72,6 @@ public class TrapSpikes : MonoBehaviour
             return;
         }
 
-        Debug.Log($"Enemy {gameobj.name} entering trap zone");
         m_enemies.Add(enemyController);
     }
 
@@ -86,7 +85,6 @@ public class TrapSpikes : MonoBehaviour
             return;
         }
 
-        Debug.Log($"Enemy {gameobj.name} exiting trap zone");
         m_enemies.Remove(enemyController);
     }
 }
