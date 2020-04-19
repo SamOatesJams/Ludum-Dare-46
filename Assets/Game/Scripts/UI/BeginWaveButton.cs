@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Runtime.CompilerServices;
-using SamOatesGames.Systems;
+﻿using SamOatesGames.Systems;
+using System.Collections;
 using UnityEngine;
 
 public class BeginWaveButton : SubscribableMonoBehaviour
@@ -20,6 +19,7 @@ public class BeginWaveButton : SubscribableMonoBehaviour
 
         m_eventAggregator = EventAggregator.GetInstance();
         m_eventAggregator.Subscribe<RequestDaytimeEvent>(this, OnRequestDaytimeEvent);
+        m_eventAggregator.Subscribe<RequestNighttimeEvent>(this, OnRequestNighttimeEvent);
 
         StartCoroutine(MoveButton((RectTransform)transform, 1.0f, m_visiblePositionX));
     }
@@ -27,12 +27,16 @@ public class BeginWaveButton : SubscribableMonoBehaviour
     public void OnClick()
     {
         m_eventAggregator.Publish(new RequestNighttimeEvent());
-        StartCoroutine(MoveButton((RectTransform)transform, 1.0f, m_offscreenPositionX));
     }
 
     private void OnRequestDaytimeEvent(RequestDaytimeEvent args)
     {
         StartCoroutine(MoveButton((RectTransform) transform, 1.0f, m_visiblePositionX));
+    }
+
+    private void OnRequestNighttimeEvent(RequestNighttimeEvent args)
+    {
+        StartCoroutine(MoveButton((RectTransform)transform, 1.0f, m_offscreenPositionX));
     }
 
     private IEnumerator MoveButton(RectTransform rectTransform, float delay, float targetX)
