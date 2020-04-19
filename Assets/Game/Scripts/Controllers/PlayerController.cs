@@ -1,7 +1,6 @@
 ﻿using SamOatesGames.Systems;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Tilemaps;
 
 public enum PlayerType
 {
@@ -17,32 +16,35 @@ public class PlayerController : SubscribableMonoBehaviour
     [Header("Item placement")]
     public float MaxPlacementDistance = 1.5f;
     public GameObject CurrentHeldItem;
-
-    public Tile HighlightTileGreen;
-    public Tile HighlightTileBlocked;
-
+    
     [Header("Movement")]
     public float MovementSpeedModififer = 1.0f;
 
     [Header("World References")]
     public Transform Target;
     public CollisionMask CollisionMask;
-    public Tilemap HighlightLayer;
 
     private PlayerInput m_playerInput;
     private InputAction m_movementAction;
-    private Vector3Int m_lastHighlightTile;
-    private bool m_blocked;
 
     private bool m_active;
 
     private NavMovementController m_navigationController;
     private EventAggregator m_eventAggregator;
 
+    private SpriteRenderer m_placementPreview;
+    private Color m_disabledPreviewColor = new Color(1.0f, 1.0f, 1.0f, 0.25f);
+
     void Start()
     {
         m_playerInput = GetComponent<PlayerInput>();
         m_navigationController = GetComponent<NavMovementController>();
+
+        var placementPreview = new GameObject("_Placement_preview", typeof(SpriteRenderer));
+        m_placementPreview = placementPreview.GetComponent<SpriteRenderer>();
+        m_placementPreview.transform.SetParent(transform);
+        m_placementPreview.sortingOrder = 10000;
+        m_placementPreview.sprite = CurrentHeldItem.GetComponent<SpriteRenderer>().sprite;
 
         m_playerInput.DeactivateInput();
 
@@ -111,17 +113,8 @@ public class PlayerController : SubscribableMonoBehaviour
             var distance = Vector3.Distance(mousePos, transform.position);
             var blocked = distance > MaxPlacementDistance || CollisionMask.IsTileBlocked(mouseTile);
 
-            if (m_lastHighlightTile != mouseTile || m_blocked != blocked)
-            {
-                HighlightLayer.SetTile(m_lastHighlightTile, null);
-                HighlightLayer.SetTile(mouseTile, blocked ? HighlightTileBlocked : HighlightTileGreen);
-                m_lastHighlightTile = mouseTile;
-                m_blocked = blocked;
-            }
-        }
-        else
-        {
-            HighlightLayer.SetTile(m_lastHighlightTile, null);
+            m_placementPreview.transform.position = mouseTile + new Vector3(1.0f, 1.0f);
+            m_placementPreview.color = blocked ? m_disabledPreviewColor : Color.white;
         }
     }
 
@@ -166,5 +159,6 @@ public class PlayerController : SubscribableMonoBehaviour
     private void OnSwapItem(SwapItemEvent itemSwap)
     {
         CurrentHeldItem = itemSwap.item;
+        m_placementPreview.sprite = CurrentHeldItem.GetComponent<SpriteRenderer>().sprite;
     }
 }
