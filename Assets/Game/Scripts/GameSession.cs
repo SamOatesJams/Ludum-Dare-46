@@ -32,6 +32,9 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
 
     public void Start()
     {
+        Stage = GameStage.Daytime;
+        m_stageStartTime = Time.time;
+
         m_eventAggregator.Subscribe<StartNewGameEvent>(this, OnStartNewGameEvent);
         m_eventAggregator.Subscribe<StageTimeOverEvent>(this, OnStageTimeOverEvent);
 
@@ -39,8 +42,6 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
         m_eventAggregator.Subscribe<RequestNighttimeEvent>(this, OnRequestNighttimeEvent);
 
         m_eventAggregator.Subscribe<NavigationCompleteEvent>(this, OnNavigationCompleteEvent);
-
-        m_eventAggregator.Publish(new StartNewGameEvent());
     }
 
     public void OnDestroy()
