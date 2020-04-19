@@ -113,6 +113,7 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
     {
         Stage = GameStage.Daytime;
         m_stageStartTime = Time.time;
+        m_numberOfLivingEnemies = 0;
         SceneManager.LoadScene("Game Scene");
     }
 
@@ -120,6 +121,7 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
     {
         Stage = GameStage.Daytime;
         m_stageStartTime = Time.time;
+        m_numberOfLivingEnemies = 0;
     }
 
     private void OnRequestNighttimeEvent(RequestNighttimeEvent args)
@@ -135,6 +137,11 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
 
     private void OnEnemyDeathEvent(EnemyDeathEvent args)
     {
+        if (Stage != GameStage.Nighttime)
+        {
+            return;
+        }
+
         m_numberOfLivingEnemies--;
 
         if (m_numberOfLivingEnemies == 0)

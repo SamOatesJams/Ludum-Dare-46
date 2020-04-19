@@ -38,6 +38,7 @@ public class PlayerController : SubscribableMonoBehaviour
     public AudioClip PlaceItemAudioClip;
     public AudioClip FailedPlaceItemAudioClip;
     public AudioClip NotEnoughResourcesAudioClip;
+    public AudioClip PickupItemAudioClip;
 
     private PlayerInput m_playerInput;
     private InputAction m_movementAction;
@@ -262,5 +263,16 @@ public class PlayerController : SubscribableMonoBehaviour
 
         CurrentHeldItem = itemSwap.ItemDescription;
         m_placementPreview.sprite = CurrentHeldItem.PreviewImage;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        var pickupableResource = other.GetComponent<PickupableResource>();
+        if (pickupableResource != null)
+        {
+            m_inventorySystem.AddItem(pickupableResource.Type, 1);
+            m_eventAggregator.Publish(new PlayShiftedAudioEvent(AudioIds.PickupItem, PickupItemAudioClip, new Vector2(1.0f, 2.0f)));
+            Destroy(pickupableResource.gameObject);
+        }
     }
 }

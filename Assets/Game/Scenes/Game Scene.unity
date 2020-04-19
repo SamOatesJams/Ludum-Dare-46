@@ -1295,6 +1295,11 @@ PrefabInstance:
       propertyPath: HighlightLayer
       value: 
       objectReference: {fileID: 472700253}
+    - target: {fileID: 800294155954074509, guid: dc9bd66a0054cbe46a31c79e42353d3a,
+        type: 3}
+      propertyPath: PickupItemAudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: b16052c946b213e4989b55e045b0486a, type: 3}
     - target: {fileID: 1790178350051720848, guid: dc9bd66a0054cbe46a31c79e42353d3a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -19769,6 +19774,38 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1016018546 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1790178350051720863, guid: dc9bd66a0054cbe46a31c79e42353d3a,
+    type: 3}
+  m_PrefabInstance: {fileID: 264739950}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &1016018547
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016018546}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.36}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.34, y: 0.19}
+  m_EdgeRadius: 0
 --- !u!1 &1046263497
 GameObject:
   m_ObjectHideFlags: 0
@@ -27839,6 +27876,11 @@ PrefabInstance:
       propertyPath: NotEnoughResourcesAudioClip
       value: 
       objectReference: {fileID: 8300000, guid: 5fbb373d1720f684c9b702bf1de9224e, type: 3}
+    - target: {fileID: 800294155954074509, guid: 069524b9d3430b944a3d34da70c92c49,
+        type: 3}
+      propertyPath: PickupItemAudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: b16052c946b213e4989b55e045b0486a, type: 3}
     - target: {fileID: 1050695786388477143, guid: 069524b9d3430b944a3d34da70c92c49,
         type: 3}
       propertyPath: CollisionMask
