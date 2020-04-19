@@ -215,12 +215,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerType: 1
+  MaxHealth: 20
   MaxPlacementDistance: 2
   CurrentHeldItem: {fileID: 7024234245917451659, guid: dea88a52412695144b90c56f9e6474b6,
     type: 3}
-  HighlightTileGreen: {fileID: 11400000, guid: b5839e9927e8c9446937992dd243073f, type: 2}
-  HighlightTileBlocked: {fileID: 11400000, guid: 0e69664385a0b8a4392945769a32b207,
-    type: 2}
   MovementSpeedModififer: 1
   AttackDamage: 1
   AttackRange: 2
@@ -230,7 +228,8 @@ MonoBehaviour:
     m_Bits: 256
   Target: {fileID: 0}
   CollisionMask: {fileID: 0}
-  HighlightLayer: {fileID: 0}
+  PlaceItemAudioClip: {fileID: 0}
+  FailedPlaceItemAudioClip: {fileID: 0}
 --- !u!114 &8381857615956661590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,7 +258,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Active
+  m_DefaultActionMap: Monster
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &8056784868882630385

@@ -13,6 +13,10 @@ public class PlayerController : SubscribableMonoBehaviour
 {
     public PlayerType PlayerType;
 
+    [Header("Health")]
+    public double MaxHealth = 20.0f;
+    public double Health { get; private set; }
+
     [Header("Item placement")]
     public float MaxPlacementDistance = 1.5f;
     public ItemDescription CurrentHeldItem;
@@ -73,6 +77,19 @@ public class PlayerController : SubscribableMonoBehaviour
         m_eventAggregator.Subscribe<SwapItemEvent>(this, OnSwapItem);
 
         OnRequestDaytimeEvent(new RequestDaytimeEvent());
+
+        Health = MaxHealth;
+    }
+
+    public void DamagePlayer(double amount)
+    {
+        Health -= amount;
+
+        if (Health <= 0)
+        {
+            m_eventAggregator.Publish(new GameOverEvent());
+            m_active = false;
+        }
     }
 
     private void OnRequestNighttimeEvent(RequestNighttimeEvent obj)

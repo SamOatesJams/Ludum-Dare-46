@@ -215,6 +215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerType: 0
+  MaxHealth: 20
   MaxPlacementDistance: 2
   CurrentHeldItem: {fileID: 11400000, guid: 17ca840cf6603bf4bb1543ab42ea95c8, type: 2}
   MovementSpeedModififer: 1
@@ -259,7 +260,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 185858d4-36a7-4523-9315-5c7111e7eb57
+  m_DefaultActionMap: Scientist
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &8056784868882630385
