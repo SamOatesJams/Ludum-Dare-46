@@ -47,9 +47,15 @@ public class FollowTransform : SubscribableMonoBehaviour
 
     private void OnSetCameraFollowTransformEvent(SetCameraFollowTransformEvent args)
     {
+        var oldTransform = m_targetTransform;
+
         m_targetTransform = args.Transform;
         m_targetPosition = m_targetTransform.position + Offset;
-        transform.position = m_targetPosition;
+
+        if (oldTransform == null)
+        {
+            transform.position = m_targetPosition;
+        }
     }
 
     private void OnSetCameraPlayableBoundsEvent(SetCameraPlayableBoundsEvent args)
