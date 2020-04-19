@@ -95,7 +95,7 @@ public class DayNightLightingSystem : SubscribableMonoBehaviour
     IEnumerator InterpolateLightSourceCoroutine(Action<float> valueAction, float start, float end)
     {
         var time = 0.0f;
-        while (time < 1.0f)
+        while (time <= 1.0f)
         {
             var value = Mathf.Lerp(start, end, time);
             valueAction(value);
