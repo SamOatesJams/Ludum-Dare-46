@@ -20,6 +20,12 @@ public class PlayerController : SubscribableMonoBehaviour
     [Header("Movement")]
     public float MovementSpeedModififer = 1.0f;
 
+    [Header("Attack")]
+    public double AttackDamage = 1.0;
+    public double AttackRange = 1.0;
+    public double AttackDelay = 1.0;
+    public LayerMask AttackLayerMask;
+
     [Header("World References")]
     public Transform Target;
     public CollisionMask CollisionMask;
@@ -32,6 +38,8 @@ public class PlayerController : SubscribableMonoBehaviour
     private InputAction m_movementAction;
 
     private bool m_active;
+
+    private float m_lastAttackTime;
 
     private NavMovementController m_navigationController;
     private EventAggregator m_eventAggregator;
@@ -160,6 +168,42 @@ public class PlayerController : SubscribableMonoBehaviour
         }
     }
 
+    public void Attack()
+    {
+        var mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+
+        // Delay between attacks
+        if (Time.time - m_lastAttackTime <= AttackDelay)
+        {
+            return;
+        }
+
+        // Get attacked enemy
+        var ray = Physics2D.Raycast(mousePos, Vector2.zero, float.PositiveInfinity, AttackLayerMask);
+        if (ray.collider == null)
+        {
+            return;
+        }
+
+        // Only allow attacks on nearby enemies
+        if (Vector3.Distance(ray.transform.position, transform.position) >= AttackRange)
+        {
+            return;
+        }
+
+        var gameobj = ray.transform.gameObject;
+        var enemy = gameobj.GetComponent<EnemyController>();
+        if (enemy == null)
+        {
+            return;
+        }
+
+        Debug.Log("Attacking enemy");
+        enemy.DamageEnemy(AttackDamage);
+        m_lastAttackTime = Time.time;
+        // TODO animation + sound
+    }
+
     public void OnPlaceItem(InputValue value)
     {
         if (PlayerType != PlayerType.Scientist || !m_active)
@@ -168,6 +212,16 @@ public class PlayerController : SubscribableMonoBehaviour
         }
 
         PlaceCurrentItem();
+    }
+
+    public void OnAttack(InputValue value)
+    {
+        if (PlayerType != PlayerType.Monster || !m_active)
+        {
+            return;
+        }
+
+        Attack();
     }
 
     private void OnSwapItem(SwapItemEvent itemSwap)

@@ -1365,6 +1365,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scientist
       objectReference: {fileID: 0}
+    - target: {fileID: 8381857615956661590, guid: dc9bd66a0054cbe46a31c79e42353d3a,
+        type: 3}
+      propertyPath: m_NeverAutoSwitchControlSchemes
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8381857615956661590, guid: dc9bd66a0054cbe46a31c79e42353d3a,
+        type: 3}
+      propertyPath: m_DefaultActionMap
+      value: Scientist
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc9bd66a0054cbe46a31c79e42353d3a, type: 3}
 --- !u!1 &268026842
@@ -27941,8 +27951,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8381857615956661590, guid: 069524b9d3430b944a3d34da70c92c49,
         type: 3}
-      propertyPath: m_Enabled
+      propertyPath: m_NeverAutoSwitchControlSchemes
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8381857615956661590, guid: 069524b9d3430b944a3d34da70c92c49,
+        type: 3}
+      propertyPath: m_DefaultActionMap
+      value: Monster
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 069524b9d3430b944a3d34da70c92c49, type: 3}
