@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: WoodFence
   m_EditorClassIdentifier: 
   MovementModifier: 5
-  PathCost: 100
+  PathCost: 50
   Blocked: 1
   CollisionMapTile: {fileID: 11400000, guid: 61e517da59cb65345b89625c50353e9a, type: 2}

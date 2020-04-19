@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: StoneSpikes
   m_EditorClassIdentifier: 
   MovementModifier: 5
-  PathCost: 200
+  PathCost: 50
   Blocked: 1
   CollisionMapTile: {fileID: 11400000, guid: 7344344dd0ca6084092d47add7e09355, type: 2}
