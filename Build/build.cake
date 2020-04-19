@@ -2,10 +2,10 @@
 
 var _target = Argument("target", "Build");
 var _platform = Argument("platform", "WIN64");
-var _gameName = Argument("game_name", "Ludumdare46");
+var _gameName = Argument("game_name", "Survivenstein");
 
 var _itchBulterLocation = Argument("itch_butler_location", "itch.io/butler.exe");
-var _itchIoProject = Argument("itch_project", "samoatesgames/ludumdare-46");
+var _itchIoProject = Argument("itch_project", "badgerfish/survivenstein");
 var _itchBranch = Argument("itch_branch", "windows-dev");
 
 var _testMode = Argument("test_mode", "playmode");
