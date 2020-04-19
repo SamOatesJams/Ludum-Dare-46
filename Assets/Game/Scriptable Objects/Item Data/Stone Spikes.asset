@@ -18,4 +18,4 @@ MonoBehaviour:
   DisplayName: Stone Spikes
   Prefab: {fileID: 3622655488571124440, guid: 91a1974e052e52145b776b8887fb9ef4, type: 3}
   ResourceUsed: 1
-  NumberOfResourcesUsed: 5
+  NumberOfResourcesUsed: 4

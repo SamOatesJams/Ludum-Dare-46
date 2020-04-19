@@ -40,11 +40,13 @@ public class PlayShiftedAudioEvent : IEventAggregatorEvent
     public int AudioId { get; }
     public AudioClip AudioClip { get; }
     public Vector2 PitchRange { get; }
+    public float Volume { get; }
 
-    public PlayShiftedAudioEvent(int audioId, AudioClip audioClip, Vector2 pitchRange)
+    public PlayShiftedAudioEvent(int audioId, AudioClip audioClip, Vector2 pitchRange, float volume = 1.0f)
     {
         AudioId = audioId;
         AudioClip = audioClip;
         PitchRange = pitchRange;
+        Volume = volume;
     }
 }

@@ -18,4 +18,4 @@ MonoBehaviour:
   DisplayName: Metal Spikes
   Prefab: {fileID: 3622655488571124440, guid: 41f47f78dde8bf2468638bfa87bd8954, type: 3}
   ResourceUsed: 2
-  NumberOfResourcesUsed: 10
+  NumberOfResourcesUsed: 6

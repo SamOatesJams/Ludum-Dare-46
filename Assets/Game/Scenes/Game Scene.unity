@@ -1295,11 +1295,6 @@ PrefabInstance:
       propertyPath: HighlightLayer
       value: 
       objectReference: {fileID: 472700253}
-    - target: {fileID: 800294155954074509, guid: dc9bd66a0054cbe46a31c79e42353d3a,
-        type: 3}
-      propertyPath: PickupItemAudioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: b16052c946b213e4989b55e045b0486a, type: 3}
     - target: {fileID: 1790178350051720848, guid: dc9bd66a0054cbe46a31c79e42353d3a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -27881,6 +27876,11 @@ PrefabInstance:
       propertyPath: PickupItemAudioClip
       value: 
       objectReference: {fileID: 8300000, guid: b16052c946b213e4989b55e045b0486a, type: 3}
+    - target: {fileID: 800294155954074509, guid: 069524b9d3430b944a3d34da70c92c49,
+        type: 3}
+      propertyPath: AttackAudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: a99e83b73b687a64c9058ff5188f8cf1, type: 3}
     - target: {fileID: 1050695786388477143, guid: 069524b9d3430b944a3d34da70c92c49,
         type: 3}
       propertyPath: CollisionMask

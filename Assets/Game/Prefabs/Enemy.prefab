@@ -271,6 +271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 3
   ShadowBlob: {fileID: 7718512746908688876}
+  HurtAudioClip: {fileID: 8300000, guid: 5e3e3260ea7fb944fa19a15046815ebc, type: 3}
 --- !u!114 &4539775506968586777
 MonoBehaviour:
   m_ObjectHideFlags: 0

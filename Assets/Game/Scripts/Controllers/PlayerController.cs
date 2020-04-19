@@ -29,6 +29,7 @@ public class PlayerController : SubscribableMonoBehaviour
     public double AttackRange = 1.0;
     public double AttackDelay = 1.0;
     public LayerMask AttackLayerMask;
+    public AudioClip AttackAudioClip;
 
     [Header("World References")]
     public Transform Target;
@@ -39,6 +40,7 @@ public class PlayerController : SubscribableMonoBehaviour
     public AudioClip FailedPlaceItemAudioClip;
     public AudioClip NotEnoughResourcesAudioClip;
     public AudioClip PickupItemAudioClip;
+    public AudioClip[] WaveCompleteAudioClips;
 
     private PlayerInput m_playerInput;
     private InputAction m_movementAction;
@@ -76,10 +78,26 @@ public class PlayerController : SubscribableMonoBehaviour
         m_eventAggregator.Subscribe<RequestDaytimeEvent>(this, OnRequestDaytimeEvent);
         m_eventAggregator.Subscribe<RequestNighttimeEvent>(this, OnRequestNighttimeEvent);
         m_eventAggregator.Subscribe<SwapItemEvent>(this, OnSwapItem);
+        m_eventAggregator.Subscribe<EndWaveEvent>(this, OnEndWaveEvent);
 
         OnRequestDaytimeEvent(new RequestDaytimeEvent());
 
         Health = MaxHealth;
+    }
+
+    private void OnEndWaveEvent(EndWaveEvent args)
+    {
+        if (PlayerType == PlayerType.Scientist)
+        {
+            var audioClip = WaveCompleteAudioClips[Random.Range(0, WaveCompleteAudioClips.Length)];
+            m_eventAggregator.Publish(
+                new PlayShiftedAudioEvent(
+                    AudioIds.Doctor, 
+                    audioClip, 
+                    new Vector2(0.9f, 1.1f),
+                    0.75f)
+                );
+        }
     }
 
     public void DamagePlayer(double amount)
@@ -230,8 +248,14 @@ public class PlayerController : SubscribableMonoBehaviour
 
         Debug.Log("Attacking enemy");
         enemy.DamageEnemy(AttackDamage);
+        m_eventAggregator.Publish(new PlayShiftedAudioEvent(
+            AudioIds.MonsterAttack, 
+            AttackAudioClip,
+            new Vector2(0.5f, 1.0f), 
+            0.75f));
+
         m_lastAttackTime = Time.time;
-        // TODO animation + sound
+        // TODO animation
     }
 
     public void OnPlaceItem(InputValue value)

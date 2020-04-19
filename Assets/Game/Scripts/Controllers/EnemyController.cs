@@ -17,7 +17,8 @@ public class EnemyController : SubscribableMonoBehaviour
 
     public double MaxHealth = 20.0;
     public GameObject ShadowBlob;
-    
+    public AudioClip HurtAudioClip;
+
     private Vector3? m_target;
     private Vector3 m_spawnPoint;
     private EventAggregator m_eventAggregator;
@@ -110,6 +111,11 @@ public class EnemyController : SubscribableMonoBehaviour
     public void DamageEnemy(double damage)
     {
         Health -= damage;
+        m_eventAggregator.Publish(new PlayShiftedAudioEvent(
+            AudioIds.Villager + Random.Range(100, 110),
+            HurtAudioClip,
+            new Vector2(0.75f, 1.2f),
+            0.75f));
 
         if (Health <= 0.0)
         {

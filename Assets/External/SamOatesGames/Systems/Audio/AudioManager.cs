@@ -48,7 +48,7 @@ public class AudioManager : UnitySingleton<AudioManager>, ISubscribable
         }
 
         audioSource.clip = audioEvent.AudioClip;
-        audioSource.volume = 1.0f; // TODO: Multiply by options volume
+        audioSource.volume = audioEvent.Volume; // TODO: Multiply by options volume
         audioSource.loop = false;
         audioSource.pitch = Random.Range(audioEvent.PitchRange.x, audioEvent.PitchRange.y);
         audioSource.Play();
