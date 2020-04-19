@@ -19,7 +19,7 @@ public class NavMovementController : MonoBehaviour
     private bool m_followingRoute;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         m_navAgent = new NavAgent(CollisionMask);
         m_followingRoute = false;
