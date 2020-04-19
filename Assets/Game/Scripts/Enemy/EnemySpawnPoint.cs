@@ -8,9 +8,7 @@ public class EnemySpawnPoint : SubscribableMonoBehaviour
 
     [Header("Spawn Settings")]
     public AnimationCurve EnemySpawnCurve;
-    public int MaxWaves = 10;
-    public float EnemySpawnMultiplier = 1.0f;
-    public float RandomSpawnMultiplier = 5.0f;
+    public AnimationCurve RandomSpawnCurve;
 
     [Header("Spawn delay settings")]
     public int EnemySpawnDelayTicks = 10;
@@ -37,7 +35,7 @@ public class EnemySpawnPoint : SubscribableMonoBehaviour
     {
         Debug.Log($"Spawning wave {e.Wave}");
         m_currentWave = e.Wave;
-        m_remainingEnemies = Mathf.FloorToInt(EnemySpawnMultiplier * EnemySpawnCurve.Evaluate(m_currentWave / MaxWaves) + Random.value * RandomSpawnMultiplier);
+        m_remainingEnemies = Mathf.FloorToInt(EnemySpawnCurve.Evaluate(m_currentWave) + Random.value * RandomSpawnCurve.Evaluate(m_currentWave));
     }
 
     private void SpawnEnemy()
