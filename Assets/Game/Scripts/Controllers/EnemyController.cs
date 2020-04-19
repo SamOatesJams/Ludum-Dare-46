@@ -13,6 +13,7 @@ public class EnemyController : SubscribableMonoBehaviour
     public double Health { get; private set; }
 
     public double MaxHealth = 20.0;
+    public GameObject ShadowBlob;
     
     private Vector3? m_target;
     private Vector3 m_spawnPoint;
@@ -58,7 +59,8 @@ public class EnemyController : SubscribableMonoBehaviour
         if (Health <= 0.0)
         {
             m_eventAggregator.Publish(new EnemyDeathEvent { Enemy = this });
-            Destroy(gameObject); // TODO death animation
+            m_movementController.StopNavigation();
+            ShadowBlob.SetActive(false);
         }
     }
 }

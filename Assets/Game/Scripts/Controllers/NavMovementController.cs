@@ -28,13 +28,18 @@ public class NavMovementController : MonoBehaviour
 
     public void NavigateTo(Vector3 target)
     {
-        RecaluatePath(target);
+        RecalculatePath(target);
 
         NextPathNode();
         m_followingRoute = true;
     }
 
-    public void RecaluatePath(Vector3 target)
+    public void StopNavigation()
+    {
+        m_followingRoute = false;
+    }
+
+    public void RecalculatePath(Vector3 target)
     {
         var position = new Vector3Int(Mathf.FloorToInt(transform.position.x), Mathf.FloorToInt(transform.position.y), 0);
         var targetInt = new Vector3Int(Mathf.FloorToInt(target.x), Mathf.FloorToInt(target.y), 0);

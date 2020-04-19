@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using SamOatesGames.Systems;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator), typeof(SpriteRenderer))]
-public class AnimationController : MonoBehaviour
+public class AnimationController : SubscribableMonoBehaviour
 {
     private Vector3 m_lastPosition;
 
@@ -13,13 +12,27 @@ public class AnimationController : MonoBehaviour
     public static readonly int WalkUpAnimationBool = Animator.StringToHash("WalkUp");
     public static readonly int WalkDownAnimationBool = Animator.StringToHash("WalkDown");
     public static readonly int WalkSideAnimationBool = Animator.StringToHash("WalkSide");
+    public static readonly int IsDeadAnimationBool = Animator.StringToHash("IsDead");
 
     void Start()
     {
+        var eventAggregator = EventAggregator.GetInstance();
+        eventAggregator.Subscribe<EnemyDeathEvent>(this, OnEnemyDeathEvent);
+
         m_animator = GetComponent<Animator>();
         m_renderer = GetComponent<SpriteRenderer>();
 
         m_lastPosition = transform.position;
+    }
+
+    private void OnEnemyDeathEvent(EnemyDeathEvent args)
+    {
+        if (args.Enemy.gameObject != gameObject)
+        {
+            return;
+        }
+
+        m_animator.SetBool(IsDeadAnimationBool, true);
     }
 
     // Update is called once per frame

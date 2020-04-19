@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using SamOatesGames.Systems;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class TrapSpikes : MonoBehaviour
+public class TrapSpikes : SubscribableMonoBehaviour
 {
     public double MaxHealth = 20.0f;
     public double DamagePerTick = 1.0f;
@@ -12,7 +12,7 @@ public class TrapSpikes : MonoBehaviour
 
     public double Health { get; private set; }
 
-    private HashSet<EnemyController> m_enemies = new HashSet<EnemyController>();
+    private readonly HashSet<EnemyController> m_enemies = new HashSet<EnemyController>();
     private int m_currentTicks = 0;
     private Animator m_animator;
 
@@ -22,9 +22,17 @@ public class TrapSpikes : MonoBehaviour
     {
         m_animator = GetComponent<Animator>();
 
+        var eventAggregator = EventAggregator.GetInstance();
+        eventAggregator.Subscribe<EnemyDeathEvent>(this, OnEnemyDeathEvent);
+
         m_currentTicks = TicksPerDamageTick;
         Health = MaxHealth;
         m_animator.SetFloat(HealthAnimatorFloat, 1.0f);
+    }
+
+    private void OnEnemyDeathEvent(EnemyDeathEvent args)
+    {
+        m_enemies.Remove(args.Enemy);
     }
 
     private void DamageSelf(double amount)
@@ -34,7 +42,6 @@ public class TrapSpikes : MonoBehaviour
 
         if (Health <= 0)
         {
-            // TODO animation
             Destroy(gameObject);
         }
     }

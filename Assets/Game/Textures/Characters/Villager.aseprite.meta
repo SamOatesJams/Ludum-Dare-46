@@ -35,5 +35,8 @@ ScriptedImporter:
   - animationName: WalkUp
     loopTime: 1
     about: "Animation Type:\tForward\r\nAnimation:\tFrom: 12; To: 15"
+  - animationName: Death
+    loopTime: 0
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 16; To: 18"
   atlas: {instanceID: 0}
   importType: 0
