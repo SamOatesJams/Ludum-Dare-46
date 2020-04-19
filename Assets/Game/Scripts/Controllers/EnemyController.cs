@@ -17,13 +17,14 @@ public class EnemyController : SubscribableMonoBehaviour
         Health = MaxHealth;
     }
 
-    void DamageEnemy(double damage)
+    public void DamageEnemy(double damage)
     {
         Health -= damage;
 
         if (Health <= 0.0)
         {
             m_eventAggregator.Publish(new EnemyDeathEvent { Enemy = this });
+            Destroy(gameObject); // TODO death animation
         }
     }
     

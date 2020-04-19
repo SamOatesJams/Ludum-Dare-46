@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 7024234245917451657}
   - component: {fileID: 7024234245917451658}
   - component: {fileID: 7024234245917451656}
+  - component: {fileID: 8452724174092436137}
+  - component: {fileID: 3622655488571124440}
   m_Layer: 0
   m_Name: Spike Wooden
   m_TagString: Untagged
@@ -102,3 +104,35 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!70 &8452724174092436137
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7024234245917451659}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.5, y: 0.5}
+  m_Direction: 0
+--- !u!114 &3622655488571124440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7024234245917451659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5be63ec102e91a945968a38ed67cb4cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 20
+  DamagePerTick: 1
+  SelfDamagePerTick: 1
+  TicksPerDamageTick: 20
