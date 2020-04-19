@@ -56,7 +56,7 @@ public class EnemySpawnPoint : SubscribableMonoBehaviour
 
         m_eventAggregator.Publish(new EnemySpawnEvent() { Enemy = enemy });
 
-        InventorySystem.GetInstance().AddItem(ItemType.Currency, 10);
+        InventorySystem.GetInstance().AddItem(ResourceType.Currency, 10);
     }
 
     public void FixedUpdate()

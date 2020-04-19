@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SamOatesGames.Systems;
 using SamOatesGames.Systems.Core;
 
 public class InventorySystem : UnitySingleton<InventorySystem>, ISubscribable
 {
-    private List<int> m_itemCounts = new List<int>(4) { 0, 0, 0, 0 };
+    private readonly Dictionary<ResourceType, int> m_resourceCounts = new Dictionary<ResourceType, int>();
 
     private EventAggregator m_eventAggregator;
 
@@ -12,6 +13,14 @@ public class InventorySystem : UnitySingleton<InventorySystem>, ISubscribable
     {
         base.ResolveSystems();
         m_eventAggregator = EventAggregator.GetInstance();
+    }
+
+    public void Start()
+    {
+        foreach (ResourceType resourceType in Enum.GetValues(typeof(ResourceType)))
+        {
+            m_resourceCounts[resourceType] = 0;
+        }
     }
 
     public void OnDestroy()
@@ -22,14 +31,14 @@ public class InventorySystem : UnitySingleton<InventorySystem>, ISubscribable
         }
     }
 
-    public void AddItem(ItemType type, int amount)
+    public void AddItem(ResourceType type, int amount)
     {
-        m_itemCounts[(int)type] += amount;
-        m_eventAggregator.Publish(new ItemPickupEvent { ItemType = type, Amount = amount });
+        m_resourceCounts[type] += amount;
+        m_eventAggregator.Publish(new ResourcePickupEvent { ResourceType = type, Amount = amount });
     }
 
-    public int GetItemAmount(ItemType type)
+    public int GetItemAmount(ResourceType type)
     {
-        return m_itemCounts[(int)type];
+        return m_resourceCounts[type];
     }
 }
