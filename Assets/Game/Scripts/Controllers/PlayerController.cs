@@ -119,6 +119,10 @@ public class PlayerController : SubscribableMonoBehaviour
                 m_blocked = blocked;
             }
         }
+        else
+        {
+            HighlightLayer.SetTile(m_lastHighlightTile, null);
+        }
     }
 
 
