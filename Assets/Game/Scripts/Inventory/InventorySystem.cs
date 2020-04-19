@@ -15,12 +15,10 @@ public class InventorySystem : UnitySingleton<InventorySystem>, ISubscribable
         m_eventAggregator = EventAggregator.GetInstance();
     }
 
-    public void Start()
+    protected override void Awake()
     {
-        foreach (ResourceType resourceType in Enum.GetValues(typeof(ResourceType)))
-        {
-            m_resourceCounts[resourceType] = 0;
-        }
+        base.Awake();
+        ResetResources();
     }
 
     public void OnDestroy()
@@ -31,10 +29,18 @@ public class InventorySystem : UnitySingleton<InventorySystem>, ISubscribable
         }
     }
 
+    public void ResetResources()
+    {
+        m_resourceCounts[ResourceType.Wood] = 10;
+        m_resourceCounts[ResourceType.Stone] = 2;
+        m_resourceCounts[ResourceType.Metal] = 1;
+        m_resourceCounts[ResourceType.Currency] = 0;
+    }
+
     public void AddItem(ResourceType type, int amount)
     {
         m_resourceCounts[type] += amount;
-        m_eventAggregator.Publish(new ResourcePickupEvent { ResourceType = type, Amount = amount });
+        m_eventAggregator.Publish(new ResourcePickupEvent(type, amount, m_resourceCounts[type]));
     }
 
     public int GetItemAmount(ResourceType type)
