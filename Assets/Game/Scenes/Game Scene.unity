@@ -824,9 +824,9 @@ PrefabInstance:
       objectReference: {fileID: 1131377869}
     - target: {fileID: 800294155954074509, guid: dc9bd66a0054cbe46a31c79e42353d3a,
         type: 3}
-      propertyPath: HighlightLayer
+      propertyPath: Target
       value: 
-      objectReference: {fileID: 472700253}
+      objectReference: {fileID: 489605842}
     - target: {fileID: 800294155954074509, guid: dc9bd66a0054cbe46a31c79e42353d3a,
         type: 3}
       propertyPath: CollisionMask
@@ -834,9 +834,9 @@ PrefabInstance:
       objectReference: {fileID: 1131377869}
     - target: {fileID: 800294155954074509, guid: dc9bd66a0054cbe46a31c79e42353d3a,
         type: 3}
-      propertyPath: Target
+      propertyPath: HighlightLayer
       value: 
-      objectReference: {fileID: 489605842}
+      objectReference: {fileID: 472700253}
     - target: {fileID: 1790178350051720848, guid: dc9bd66a0054cbe46a31c79e42353d3a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -896,11 +896,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Scientist
-      objectReference: {fileID: 0}
-    - target: {fileID: 8381857615956661590, guid: dc9bd66a0054cbe46a31c79e42353d3a,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc9bd66a0054cbe46a31c79e42353d3a, type: 3}
