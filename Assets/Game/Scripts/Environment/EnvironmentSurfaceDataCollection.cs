@@ -24,4 +24,10 @@ public class EnvironmentSurfaceDataCollection : ScriptableObject
         var data = GetSurfaceData(surfaceName);
         return data != null ? data.MovementModifier : float.PositiveInfinity;
     }
+
+    public float GetPathCost(string surfaceName)
+    {
+        var data = GetSurfaceData(surfaceName);
+        return data != null ? data.PathCost : float.PositiveInfinity;
+    }
 }

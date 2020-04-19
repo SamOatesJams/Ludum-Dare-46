@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Path
   m_EditorClassIdentifier: 
   MovementModifier: 1
+  PathCost: 1
   Blocked: 0
   CollisionMapTile: {fileID: 11400000, guid: 1a6d1396ab790dd499b58aaa63f50ce7, type: 2}

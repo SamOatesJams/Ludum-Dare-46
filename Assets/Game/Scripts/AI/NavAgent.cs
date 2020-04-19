@@ -117,6 +117,6 @@ public class NavAgent
 
     private float CalculatePathCost(Vector3Int target, float currentWeight)
     {
-        return currentWeight + m_collisionMask.GetMovementMultiplier((Vector3) target);
+        return currentWeight + m_collisionMask.GetPathCost((Vector3) target);
     }
 }
