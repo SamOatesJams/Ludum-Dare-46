@@ -9,7 +9,7 @@ public class CollisionMask : MonoBehaviour
     private Tilemap m_tilemap;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         m_tilemap = GetComponent<Tilemap>();
     }

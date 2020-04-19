@@ -1,12 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
-public class EnemyMovementController : MonoBehaviour
+public class NavMovementController : MonoBehaviour
 {
+    [Header("World References")]
     public CollisionMask CollisionMask;
-    public Transform Target;
+
+    [Header("Movement modifiers")]
     public float MovementSpeedMultiplier = 0.01f;
     public float SurfaceSpeedModifier = 0.1f;
 
@@ -16,35 +16,37 @@ public class EnemyMovementController : MonoBehaviour
     private Vector3 m_lastPosition;
     private Vector3 m_currentTarget;
     private float m_progress;
-    private bool m_endOfPath;
+    private bool m_followingRoute;
 
     // Start is called before the first frame update
     void Start()
     {
         m_navAgent = new NavAgent(CollisionMask);
-
-        if (Target != null)
-        {
-            RecaluatePath();
-        }
+        m_followingRoute = false;
     }
 
-    public void RecaluatePath()
+    public void NavigateTo(Vector3 target)
+    {
+        RecaluatePath(target);
+
+        NextPathNode();
+        m_followingRoute = true;
+    }
+
+    public void RecaluatePath(Vector3 target)
     {
         var position = new Vector3Int(Mathf.FloorToInt(transform.position.x), Mathf.FloorToInt(transform.position.y), 0);
-        var target = new Vector3Int(Mathf.FloorToInt(Target.position.x), Mathf.FloorToInt(Target.position.y), 0);
-        m_path = m_navAgent.CalculatePath(position, target);
+        var targetInt = new Vector3Int(Mathf.FloorToInt(target.x), Mathf.FloorToInt(target.y), 0);
+        m_path = m_navAgent.CalculatePath(position, targetInt);
 
         Debug.Assert(m_path != null, "Could not find path to target");
-        NextPathNode();
-        m_endOfPath = false;
     }
 
     public void NextPathNode()
     {
         if (m_path.Count == 0)
         {
-            m_endOfPath = true;
+            m_followingRoute = false;
             return;
         }
 
@@ -58,11 +60,11 @@ public class EnemyMovementController : MonoBehaviour
     {
         if (CollisionMask == null)
         {
-            Debug.LogWarning($"No '{nameof(CollisionMask)}' is set on '{nameof(EnemyMovementController)}:{name}'");
+            Debug.LogWarning($"No '{nameof(CollisionMask)}' is set on '{nameof(NavMovementController)}:{name}'");
             return;
         }
 
-        if (m_endOfPath)
+        if (!m_followingRoute)
         {
             return;
         }

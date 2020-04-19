@@ -48,14 +48,13 @@ public class EnemySpawnPoint : SubscribableMonoBehaviour
 
         var enemyObj = Instantiate(EnemyPrefab, spawnPoint.position, Quaternion.identity, transform);
 
-        var controller = enemyObj.GetComponent<EnemyMovementController>();
+        var controller = enemyObj.GetComponent<NavMovementController>();
         controller.CollisionMask = CollisionMask;
-        controller.Target = Target;
 
         var enemy = enemyObj.GetComponent<EnemyController>();
+        enemy.Target = Target;
 
         m_eventAggregator.Publish(new EnemySpawnEvent() { Enemy = enemy });
-
         InventorySystem.GetInstance().AddItem(ResourceType.Currency, 10);
     }
 

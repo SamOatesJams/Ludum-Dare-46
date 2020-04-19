@@ -97,8 +97,9 @@ GameObject:
   - component: {fileID: 800294155954074509}
   - component: {fileID: 8381857615956661590}
   - component: {fileID: 8056784868882630385}
+  - component: {fileID: 1050695786388477143}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Monster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -158,7 +159,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 4424028072602644833, guid: 5728dc3905eeff146ac7c9ce2f712508,
+  m_Sprite: {fileID: 1170607554858067750, guid: 0a6bba3a3b690b14f84ca061c07d846a,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -180,7 +181,7 @@ Animator:
   m_GameObject: {fileID: 1790178350051720863}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e82b410bf74ef6b4c84ad6a25e2d5659, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5d69f754bf6056340a896d20e75a020e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -213,12 +214,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1762a828996a624a96a396d4abc5ee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerType: 1
   MaxPlacementDistance: 2
   CurrentHeldItem: {fileID: 7024234245917451659, guid: dea88a52412695144b90c56f9e6474b6,
     type: 3}
   HighlightTileGreen: {fileID: 11400000, guid: b5839e9927e8c9446937992dd243073f, type: 2}
   HighlightTileBlocked: {fileID: 11400000, guid: 0e69664385a0b8a4392945769a32b207,
     type: 2}
+  MovementSpeedModififer: 1
+  Target: {fileID: 0}
   CollisionMask: {fileID: 0}
   HighlightLayer: {fileID: 0}
 --- !u!114 &8381857615956661590
@@ -228,7 +232,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1790178350051720863}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
@@ -249,7 +253,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_DefaultActionMap: Active
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &8056784868882630385
@@ -265,3 +269,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Offset: 0
+--- !u!114 &1050695786388477143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790178350051720863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 240626240bae3094fbe5b5265c636ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionMask: {fileID: 0}
+  MovementSpeedMultiplier: 0.01
+  SurfaceSpeedModifier: 0.1
