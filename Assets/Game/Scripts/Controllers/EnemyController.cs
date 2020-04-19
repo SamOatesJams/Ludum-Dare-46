@@ -1,4 +1,5 @@
-﻿using SamOatesGames.Systems;
+﻿using System.Collections;
+using SamOatesGames.Systems;
 using UnityEngine;
 
 [RequireComponent(typeof(NavMovementController))]
@@ -49,6 +50,28 @@ public class EnemyController : SubscribableMonoBehaviour
         }
 
         m_state = EnemyState.Dead;
+        StartCoroutine(DestroyDeadPlayer());
+    }
+
+    private IEnumerator DestroyDeadPlayer()
+    {
+        yield return new WaitForSecondsRealtime(10.0f);
+
+        var spriteRenderer = GetComponent<SpriteRenderer>();
+        var startColor = spriteRenderer.color;
+        var endColor = Color.clear;
+
+        var time = 0.0f;
+        while (time <= 1.0f)
+        {
+            var value = Color.Lerp(startColor, endColor, time);
+            spriteRenderer.color = value;
+
+            time += 0.01f;
+            yield return new WaitForFixedUpdate();
+        }
+
+        Destroy(gameObject);
     }
 
     private void OnNavigationCompleteEvent(NavigationCompleteEvent args)
