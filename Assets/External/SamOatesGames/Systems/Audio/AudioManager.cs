@@ -13,6 +13,7 @@ public class AudioManager : UnitySingleton<AudioManager>, ISubscribable
         base.ResolveSystems();
         m_eventAggregator = EventAggregator.GetInstance();
         m_eventAggregator.Subscribe<PlayAudioEvent>(this, HandlePlayAudioEvent);
+        m_eventAggregator.Subscribe<PlayShiftedAudioEvent>(this, HandlePlayShiftedAudioEvent);
         m_eventAggregator.Subscribe<StopAudioEvent>(this, HandleStopAudioEvent);
     }
 
@@ -35,6 +36,21 @@ public class AudioManager : UnitySingleton<AudioManager>, ISubscribable
         audioSource.clip = audioEvent.AudioClip;
         audioSource.volume = audioEvent.VolumeScale; // TODO: Multiply by options volume
         audioSource.loop = audioEvent.Loop;
+        audioSource.Play();
+    }
+
+    private void HandlePlayShiftedAudioEvent(PlayShiftedAudioEvent audioEvent)
+    {
+        if (!m_audioSourceMap.TryGetValue(audioEvent.AudioId, out var audioSource))
+        {
+            audioSource = CreateNewAudioSource(audioEvent.AudioId);
+            m_audioSourceMap[audioEvent.AudioId] = audioSource;
+        }
+
+        audioSource.clip = audioEvent.AudioClip;
+        audioSource.volume = 1.0f; // TODO: Multiply by options volume
+        audioSource.loop = false;
+        audioSource.pitch = Random.Range(audioEvent.PitchRange.x, audioEvent.PitchRange.y);
         audioSource.Play();
     }
 

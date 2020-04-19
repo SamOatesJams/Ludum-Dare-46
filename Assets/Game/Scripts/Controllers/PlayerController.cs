@@ -24,6 +24,10 @@ public class PlayerController : SubscribableMonoBehaviour
     public Transform Target;
     public CollisionMask CollisionMask;
 
+    [Header("Audio Clips")]
+    public AudioClip PlaceItemAudioClip;
+    public AudioClip FailedPlaceItemAudioClip;
+
     private PlayerInput m_playerInput;
     private InputAction m_movementAction;
 
@@ -148,6 +152,11 @@ public class PlayerController : SubscribableMonoBehaviour
         {
             Instantiate(CurrentHeldItem, tileCentre, Quaternion.identity, null);
             CollisionMask.SetTile(mouseTile, ItemType.WoodSpikes);
+            m_eventAggregator.Publish(new PlayShiftedAudioEvent(AudioIds.PlaceItem, PlaceItemAudioClip, new Vector2(2.5f, 4.0f)));
+        }
+        else
+        {
+            m_eventAggregator.Publish(new PlayShiftedAudioEvent(AudioIds.PlaceItem, FailedPlaceItemAudioClip, new Vector2(0.5f, 1.0f)));
         }
     }
 

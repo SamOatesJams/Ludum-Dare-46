@@ -34,3 +34,17 @@ public class PlayAudioEvent : IEventAggregatorEvent
     {
     }
 }
+
+public class PlayShiftedAudioEvent : IEventAggregatorEvent
+{
+    public int AudioId { get; }
+    public AudioClip AudioClip { get; }
+    public Vector2 PitchRange { get; }
+
+    public PlayShiftedAudioEvent(int audioId, AudioClip audioClip, Vector2 pitchRange)
+    {
+        AudioId = audioId;
+        AudioClip = audioClip;
+        PitchRange = pitchRange;
+    }
+}
