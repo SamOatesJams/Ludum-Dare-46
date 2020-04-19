@@ -13,5 +13,9 @@ MonoBehaviour:
   m_Name: Wooden Spikes
   m_EditorClassIdentifier: 
   Type: 0
+  PreviewImage: {fileID: -6411287655764905394, guid: 3eac5b16c2145d04fb76e234d622af61,
+    type: 3}
   DisplayName: Wooden Spikes
   Prefab: {fileID: 3622655488571124440, guid: dea88a52412695144b90c56f9e6474b6, type: 3}
+  ResourceUsed: 0
+  NumberOfResourcesUsed: 2

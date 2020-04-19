@@ -13,5 +13,9 @@ MonoBehaviour:
   m_Name: Stone Spikes
   m_EditorClassIdentifier: 
   Type: 1
+  PreviewImage: {fileID: 3438799549359452864, guid: 074311c74b7010d45a15aa2fd59b37d1,
+    type: 3}
   DisplayName: Stone Spikes
   Prefab: {fileID: 3622655488571124440, guid: 91a1974e052e52145b776b8887fb9ef4, type: 3}
+  ResourceUsed: 1
+  NumberOfResourcesUsed: 5

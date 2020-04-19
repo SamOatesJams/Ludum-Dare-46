@@ -15,7 +15,7 @@ public class PlayerController : SubscribableMonoBehaviour
 
     [Header("Item placement")]
     public float MaxPlacementDistance = 1.5f;
-    public PlaceableItem CurrentHeldItem;
+    public ItemDescription CurrentHeldItem;
     
     [Header("Movement")]
     public float MovementSpeedModififer = 1.0f;
@@ -58,7 +58,7 @@ public class PlayerController : SubscribableMonoBehaviour
             m_placementPreview = placementPreview.GetComponent<SpriteRenderer>();
             m_placementPreview.transform.SetParent(transform);
             m_placementPreview.sortingOrder = 10000;
-            m_placementPreview.sprite = CurrentHeldItem.GetComponent<SpriteRenderer>().sprite;
+            m_placementPreview.sprite = CurrentHeldItem.PreviewImage;
         }
 
         m_playerInput.DeactivateInput();
@@ -158,7 +158,7 @@ public class PlayerController : SubscribableMonoBehaviour
 
         if (!blocked)
         {
-            Instantiate(CurrentHeldItem.gameObject, tileCentre, Quaternion.identity, null);
+            Instantiate(CurrentHeldItem.Prefab, tileCentre, Quaternion.identity, null);
             CollisionMask.SetTile(mouseTile, CurrentHeldItem.Type);
             m_eventAggregator.Publish(new PlayShiftedAudioEvent(AudioIds.PlaceItem, PlaceItemAudioClip, new Vector2(2.5f, 4.0f)));
         }
@@ -231,7 +231,7 @@ public class PlayerController : SubscribableMonoBehaviour
             return;
         }
 
-        CurrentHeldItem = itemSwap.Item;
-        m_placementPreview.sprite = CurrentHeldItem.GetComponent<SpriteRenderer>().sprite;
+        CurrentHeldItem = itemSwap.ItemDescription;
+        m_placementPreview.sprite = CurrentHeldItem.PreviewImage;
     }
 }

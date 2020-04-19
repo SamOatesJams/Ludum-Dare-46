@@ -13,5 +13,9 @@ MonoBehaviour:
   m_Name: Metal Spikes
   m_EditorClassIdentifier: 
   Type: 2
+  PreviewImage: {fileID: 5047331833850405403, guid: ed9ba6d0c66714f4d81560419e10a0f7,
+    type: 3}
   DisplayName: Metal Spikes
   Prefab: {fileID: 3622655488571124440, guid: 41f47f78dde8bf2468638bfa87bd8954, type: 3}
+  ResourceUsed: 2
+  NumberOfResourcesUsed: 10

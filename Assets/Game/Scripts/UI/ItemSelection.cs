@@ -2,24 +2,20 @@
 
 public class ItemSelection : SubscribableMonoBehaviour
 {
-    public PlaceableItem[] Items;
-    public PlaceableItem SelectedItem;
+    public ItemDescription[] Items;
 
     public void WoodClicked()
     {
-        SelectedItem = Items[0];
-        Publish(new SwapItemEvent(SelectedItem, this));
+        Publish(new SwapItemEvent(Items[0]));
     }
 
     public void StoneClicked()
     {
-        SelectedItem = Items[1];
-        Publish(new SwapItemEvent(SelectedItem, this));
+        Publish(new SwapItemEvent(Items[1]));
     }
 
     public void MetalClicked()
     {
-        SelectedItem = Items[2];
-        Publish(new SwapItemEvent(SelectedItem, this));
+        Publish(new SwapItemEvent(Items[2]));
     }
 }

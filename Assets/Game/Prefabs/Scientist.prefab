@@ -216,9 +216,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerType: 0
   MaxPlacementDistance: 2
-  CurrentHeldItem: {fileID: 3622655488571124440, guid: dea88a52412695144b90c56f9e6474b6,
-    type: 3}
+  CurrentHeldItem: {fileID: 11400000, guid: 17ca840cf6603bf4bb1543ab42ea95c8, type: 2}
   MovementSpeedModififer: 1
+  AttackDamage: 1
+  AttackRange: 1
+  AttackDelay: 1
+  AttackLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   Target: {fileID: 0}
   CollisionMask: {fileID: 0}
   PlaceItemAudioClip: {fileID: 8300000, guid: b15b68fda6de91d408909b7a2f32b72d, type: 3}

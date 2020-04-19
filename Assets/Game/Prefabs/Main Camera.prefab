@@ -1410,10 +1410,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Items:
-  - {fileID: 3622655488571124440, guid: dea88a52412695144b90c56f9e6474b6, type: 3}
-  - {fileID: 3622655488571124440, guid: 91a1974e052e52145b776b8887fb9ef4, type: 3}
-  - {fileID: 3622655488571124440, guid: 41f47f78dde8bf2468638bfa87bd8954, type: 3}
-  SelectedItem: {fileID: 0}
+  - {fileID: 11400000, guid: 17ca840cf6603bf4bb1543ab42ea95c8, type: 2}
+  - {fileID: 11400000, guid: 79ae9a81306cc4c4b8b97ba9c904e00b, type: 2}
+  - {fileID: 11400000, guid: 069169f8d5f9aa74bba95f2cd3a9c76e, type: 2}
 --- !u!114 &484203080
 MonoBehaviour:
   m_ObjectHideFlags: 0
