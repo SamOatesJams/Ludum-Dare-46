@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f8f7a24bd0e8af48be4d9c59f318c7d, type: 3}
-  m_Name: Path
+  m_Name: WoodSpikes
   m_EditorClassIdentifier: 
-  SurfaceName: CM_Path
   MovementModifier: 1
+  Blocked: 1
+  CollisionMapTile: {fileID: 11400000, guid: 57465c270b55222418c86af0d0465c4b, type: 2}
