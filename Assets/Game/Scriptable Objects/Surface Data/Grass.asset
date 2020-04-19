@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f8f7a24bd0e8af48be4d9c59f318c7d, type: 3}
   m_Name: Grass
   m_EditorClassIdentifier: 
-  SurfaceName: CM_Grass
   MovementModifier: 5
+  Blocked: 0
+  CollisionMapTile: {fileID: 11400000, guid: b5839e9927e8c9446937992dd243073f, type: 2}

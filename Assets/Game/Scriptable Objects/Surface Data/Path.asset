@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f8f7a24bd0e8af48be4d9c59f318c7d, type: 3}
   m_Name: Path
   m_EditorClassIdentifier: 
-  SurfaceName: CM_Path
   MovementModifier: 1
+  Blocked: 0
+  CollisionMapTile: {fileID: 11400000, guid: 1a6d1396ab790dd499b58aaa63f50ce7, type: 2}
