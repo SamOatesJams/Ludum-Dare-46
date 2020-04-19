@@ -52,7 +52,7 @@ public class EnemySpawnPoint : SubscribableMonoBehaviour
         controller.CollisionMask = CollisionMask;
 
         var enemy = enemyObj.GetComponent<EnemyController>();
-        enemy.Target = Target;
+        enemy.SetTarget(Target.position);
 
         m_eventAggregator.Publish(new EnemySpawnEvent() { Enemy = enemy });
         InventorySystem.GetInstance().AddItem(ResourceType.Currency, 10);

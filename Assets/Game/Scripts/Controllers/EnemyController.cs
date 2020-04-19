@@ -1,26 +1,54 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using SamOatesGames.Systems;
 using UnityEngine;
-using SamOatesGames.Systems;
 
 [RequireComponent(typeof(NavMovementController))]
 public class EnemyController : SubscribableMonoBehaviour
 {
+    public enum EnemyState
+    {
+        Attacking,
+        RunningAway
+    }
+
     public double Health { get; private set; }
 
     public double MaxHealth = 20.0;
-    public Transform Target;
-
+    
+    private Vector3? m_target;
+    private Vector3 m_spawnPoint;
     private EventAggregator m_eventAggregator;
     private NavMovementController m_movementController;
+    private EnemyState m_state = EnemyState.Attacking;
 
     void Start()
     {
         m_eventAggregator = EventAggregator.GetInstance();
+        m_eventAggregator.Subscribe<RequestDaytimeEvent>(this, OnRequestDaytimeEvent);
+
         m_movementController = GetComponent<NavMovementController>();
 
         Health = MaxHealth;
-        m_movementController.NavigateTo(Target.position);
+        m_spawnPoint = transform.position;
+
+        if (m_target != null)
+        {
+            m_movementController.NavigateTo(m_target.Value);
+        }
+    }
+
+    private void OnRequestDaytimeEvent(RequestDaytimeEvent args)
+    {
+        m_state = EnemyState.RunningAway;
+        SetTarget(m_spawnPoint);
+    }
+
+    public void SetTarget(Vector3 target)
+    {
+        m_target = target;
+        if (m_movementController != null)
+        {
+            m_movementController.NavigateTo(target);
+        }
     }
 
     public void DamageEnemy(double damage)
@@ -32,10 +60,5 @@ public class EnemyController : SubscribableMonoBehaviour
             m_eventAggregator.Publish(new EnemyDeathEvent { Enemy = this });
             Destroy(gameObject); // TODO death animation
         }
-    }
-    
-    void Update()
-    {
-        
     }
 }
