@@ -22,6 +22,7 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
     private InventorySystem m_inventorySystem;
 
     private float m_stageStartTime;
+    private int m_numberOfLivingEnemies;
 
     public override void ResolveSystems()
     {
@@ -40,6 +41,9 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
 
         m_eventAggregator.Subscribe<RequestDaytimeEvent>(this, OnRequestDaytimeEvent);
         m_eventAggregator.Subscribe<RequestNighttimeEvent>(this, OnRequestNighttimeEvent);
+
+        m_eventAggregator.Subscribe<EnemySpawnEvent>(this, OnEnemySpawnEvent);
+        m_eventAggregator.Subscribe<EnemyDeathEvent>(this, OnEnemyDeathEvent);
 
         m_eventAggregator.Subscribe<NavigationCompleteEvent>(this, OnNavigationCompleteEvent);
         m_eventAggregator.Subscribe<GameOverEvent>(this, OnGameOverEvent);
@@ -122,5 +126,20 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
     {
         Stage = GameStage.Nighttime;
         m_stageStartTime = Time.time + 5.0f;
+    }
+
+    private void OnEnemySpawnEvent(EnemySpawnEvent args)
+    {
+        m_numberOfLivingEnemies++;
+    }
+
+    private void OnEnemyDeathEvent(EnemyDeathEvent args)
+    {
+        m_numberOfLivingEnemies--;
+
+        if (m_numberOfLivingEnemies == 0)
+        {
+            m_eventAggregator.Publish(new RequestDaytimeEvent());
+        }
     }
 }
