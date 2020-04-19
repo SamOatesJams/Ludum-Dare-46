@@ -1,18 +1,19 @@
-﻿using System.Collections;
-using SamOatesGames.Systems;
-using TMPro;
+﻿using SamOatesGames.Systems;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameOverBanner : SubscribableMonoBehaviour
 {
     public UnityEngine.UI.Image BannerImage;
-    public TMP_Text BannerText;
+    public AudioClip GameOverAudio;
+
+    private EventAggregator m_eventAggregator;
 
     public void Start()
     {
-        var eventAggregator = EventAggregator.GetInstance();
-        eventAggregator.Subscribe<GameOverEvent>(this, OnGameOverEvent);
+        m_eventAggregator = EventAggregator.GetInstance();
+        m_eventAggregator.Subscribe<GameOverEvent>(this, OnGameOverEvent);
 
         var bannerTransform = (RectTransform)BannerImage.transform;
         bannerTransform.anchoredPosition = new Vector2(bannerTransform.anchoredPosition.x, 0.0f);
@@ -26,6 +27,9 @@ public class GameOverBanner : SubscribableMonoBehaviour
 
     private IEnumerator MoveBanner(RectTransform bannerTransform, float startY, float endY)
     {
+        m_eventAggregator.Publish(new StopAudioEvent(AudioIds.MenuTheme));
+        m_eventAggregator.Publish(new PlayAudioEvent(AudioIds.GameOver, GameOverAudio, false));
+
         var time = 0.0f;
         while (time <= 1.0f)
         {
@@ -35,7 +39,7 @@ public class GameOverBanner : SubscribableMonoBehaviour
             time += 0.01f;
             yield return new WaitForFixedUpdate();
         }
-
+        
         yield return new WaitForSecondsRealtime(3.0f);
 
         SceneManager.LoadScene("Main Menu");

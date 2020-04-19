@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BannerImage: {fileID: 5656956551649535543}
-  BannerText: {fileID: 5701415255933623328}
+  GameOverAudio: {fileID: 8300000, guid: a39998be0239b8945b14b3f168caf98e, type: 3}
 --- !u!1 &1740678958298187857
 GameObject:
   m_ObjectHideFlags: 0
