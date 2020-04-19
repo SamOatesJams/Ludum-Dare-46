@@ -229,6 +229,8 @@ MonoBehaviour:
   PlaceItemAudioClip: {fileID: 8300000, guid: b15b68fda6de91d408909b7a2f32b72d, type: 3}
   FailedPlaceItemAudioClip: {fileID: 8300000, guid: 83e2ab3d28e14df4486a5da5af6989ca,
     type: 3}
+  NotEnoughResourcesAudioClip: {fileID: 8300000, guid: 5fbb373d1720f684c9b702bf1de9224e,
+    type: 3}
 --- !u!114 &8381857615956661590
 MonoBehaviour:
   m_ObjectHideFlags: 0

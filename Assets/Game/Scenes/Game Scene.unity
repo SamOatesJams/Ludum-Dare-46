@@ -27834,6 +27834,11 @@ PrefabInstance:
       propertyPath: FailedPlaceItemAudioClip
       value: 
       objectReference: {fileID: 8300000, guid: 83e2ab3d28e14df4486a5da5af6989ca, type: 3}
+    - target: {fileID: 800294155954074509, guid: 069524b9d3430b944a3d34da70c92c49,
+        type: 3}
+      propertyPath: NotEnoughResourcesAudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5fbb373d1720f684c9b702bf1de9224e, type: 3}
     - target: {fileID: 1050695786388477143, guid: 069524b9d3430b944a3d34da70c92c49,
         type: 3}
       propertyPath: CollisionMask

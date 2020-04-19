@@ -33,6 +33,7 @@ public class PlayerController : SubscribableMonoBehaviour
     [Header("Audio Clips")]
     public AudioClip PlaceItemAudioClip;
     public AudioClip FailedPlaceItemAudioClip;
+    public AudioClip NotEnoughResourcesAudioClip;
 
     private PlayerInput m_playerInput;
     private InputAction m_movementAction;
@@ -161,21 +162,20 @@ public class PlayerController : SubscribableMonoBehaviour
 
         if (blocked)
         {
-            m_eventAggregator.Publish(new PlayShiftedAudioEvent(AudioIds.PlaceItem, FailedPlaceItemAudioClip, new Vector2(0.5f, 1.0f)));
+            m_eventAggregator.Publish(new PlayShiftedAudioEvent(AudioIds.FailedPlaceItem, FailedPlaceItemAudioClip, new Vector2(0.5f, 1.0f)));
             return;
         }
 
         var resourceCount = m_inventorySystem.GetItemAmount(CurrentHeldItem.ResourceUsed);
         if (resourceCount < CurrentHeldItem.NumberOfResourcesUsed)
         {
-            // TODO: New audio
-            m_eventAggregator.Publish(new PlayShiftedAudioEvent(AudioIds.PlaceItem, FailedPlaceItemAudioClip, new Vector2(0.5f, 1.0f)));
+            m_eventAggregator.Publish(new PlayShiftedAudioEvent(AudioIds.FailedPlaceItem, NotEnoughResourcesAudioClip, new Vector2(1.0f, 2.0f)));
             return;
         }
 
         Instantiate(CurrentHeldItem.Prefab, tileCentre, Quaternion.identity, null);
         CollisionMask.SetTile(mouseTile, CurrentHeldItem.Type);
-        m_eventAggregator.Publish(new PlayShiftedAudioEvent(AudioIds.PlaceItem, PlaceItemAudioClip, new Vector2(2.5f, 4.0f)));
+        m_eventAggregator.Publish(new PlayShiftedAudioEvent(AudioIds.PlaceItem, PlaceItemAudioClip, new Vector2(1.0f, 2.0f)));
 
         m_inventorySystem.UseItem(CurrentHeldItem.ResourceUsed, CurrentHeldItem.NumberOfResourcesUsed);
     }
