@@ -15,7 +15,7 @@ public class PlayerController : SubscribableMonoBehaviour
 
     [Header("Item placement")]
     public float MaxPlacementDistance = 1.5f;
-    public GameObject CurrentHeldItem;
+    public PlaceableItem CurrentHeldItem;
     
     [Header("Movement")]
     public float MovementSpeedModififer = 1.0f;
@@ -158,8 +158,8 @@ public class PlayerController : SubscribableMonoBehaviour
 
         if (!blocked)
         {
-            Instantiate(CurrentHeldItem, tileCentre, Quaternion.identity, null);
-            CollisionMask.SetTile(mouseTile, ItemType.WoodSpikes);
+            Instantiate(CurrentHeldItem.gameObject, tileCentre, Quaternion.identity, null);
+            CollisionMask.SetTile(mouseTile, CurrentHeldItem.Type);
             m_eventAggregator.Publish(new PlayShiftedAudioEvent(AudioIds.PlaceItem, PlaceItemAudioClip, new Vector2(2.5f, 4.0f)));
         }
         else
@@ -231,7 +231,7 @@ public class PlayerController : SubscribableMonoBehaviour
             return;
         }
 
-        CurrentHeldItem = itemSwap.item;
+        CurrentHeldItem = itemSwap.Item;
         m_placementPreview.sprite = CurrentHeldItem.GetComponent<SpriteRenderer>().sprite;
     }
 }

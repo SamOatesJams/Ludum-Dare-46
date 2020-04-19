@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 20
+  Type: 2
   DamagePerTick: 1
   SelfDamagePerTick: 1
   TicksPerDamageTick: 20

@@ -3,7 +3,13 @@ using UnityEngine;
 
 public class SwapItemEvent : IEventAggregatorEvent
 {
-    public GameObject item;
-    public ItemSelection itemSelection { get; set; }
+    public PlaceableItem Item { get; }
+    public ItemSelection ItemSelection { get; }
+
+    public SwapItemEvent(PlaceableItem item, ItemSelection itemSelection)
+    {
+        Item = item;
+        ItemSelection = itemSelection;
+    }
 }
 

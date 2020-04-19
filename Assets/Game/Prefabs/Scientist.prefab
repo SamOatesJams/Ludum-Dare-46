@@ -216,15 +216,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerType: 0
   MaxPlacementDistance: 2
-  CurrentHeldItem: {fileID: 7024234245917451659, guid: dea88a52412695144b90c56f9e6474b6,
+  CurrentHeldItem: {fileID: 3622655488571124440, guid: dea88a52412695144b90c56f9e6474b6,
     type: 3}
-  HighlightTileGreen: {fileID: 11400000, guid: b5839e9927e8c9446937992dd243073f, type: 2}
-  HighlightTileBlocked: {fileID: 11400000, guid: 0e69664385a0b8a4392945769a32b207,
-    type: 2}
   MovementSpeedModififer: 1
   Target: {fileID: 0}
   CollisionMask: {fileID: 0}
-  HighlightLayer: {fileID: 0}
+  PlaceItemAudioClip: {fileID: 8300000, guid: b15b68fda6de91d408909b7a2f32b72d, type: 3}
+  FailedPlaceItemAudioClip: {fileID: 8300000, guid: 83e2ab3d28e14df4486a5da5af6989ca,
+    type: 3}
 --- !u!114 &8381857615956661590
 MonoBehaviour:
   m_ObjectHideFlags: 0

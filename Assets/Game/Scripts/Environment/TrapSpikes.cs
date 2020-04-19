@@ -3,9 +3,8 @@ using SamOatesGames.Systems;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class TrapSpikes : SubscribableMonoBehaviour
+public class TrapSpikes : PlaceableItem
 {
-    public double MaxHealth = 20.0f;
     public double DamagePerTick = 1.0f;
     public double SelfDamagePerTick = 1.0f;
     public int TicksPerDamageTick = 20;
