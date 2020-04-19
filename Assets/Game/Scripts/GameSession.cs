@@ -42,6 +42,7 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
         m_eventAggregator.Subscribe<RequestNighttimeEvent>(this, OnRequestNighttimeEvent);
 
         m_eventAggregator.Subscribe<NavigationCompleteEvent>(this, OnNavigationCompleteEvent);
+        m_eventAggregator.Subscribe<GameOverEvent>(this, OnGameOverEvent);
     }
 
     public void OnDestroy()
@@ -95,9 +96,13 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
 
         if (enemy.State == EnemyController.EnemyState.Attacking)
         {
-            Stage = GameStage.GameOver;
             m_eventAggregator.Publish(new GameOverEvent());
         }
+    }
+
+    private void OnGameOverEvent(GameOverEvent args)
+    {
+        Stage = GameStage.GameOver;
     }
 
     private void OnStartNewGameEvent(StartNewGameEvent args)
