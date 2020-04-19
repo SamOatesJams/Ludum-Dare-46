@@ -7,7 +7,8 @@ public class EnemyController : SubscribableMonoBehaviour
     public enum EnemyState
     {
         Attacking,
-        RunningAway
+        RunningAway,
+        Dead
     }
 
     public double Health { get; private set; }
@@ -25,6 +26,8 @@ public class EnemyController : SubscribableMonoBehaviour
     {
         m_eventAggregator = EventAggregator.GetInstance();
         m_eventAggregator.Subscribe<RequestDaytimeEvent>(this, OnRequestDaytimeEvent);
+        m_eventAggregator.Subscribe<NavigationCompleteEvent>(this, OnNavigationCompleteEvent);
+        m_eventAggregator.Subscribe<EnemyDeathEvent>(this, OnEnemyDeathEvent);
 
         m_movementController = GetComponent<NavMovementController>();
 
@@ -37,8 +40,36 @@ public class EnemyController : SubscribableMonoBehaviour
         }
     }
 
+    private void OnEnemyDeathEvent(EnemyDeathEvent args)
+    {
+        if (args.Enemy != this)
+        {
+            return;
+        }
+
+        m_state = EnemyState.Dead;
+    }
+
+    private void OnNavigationCompleteEvent(NavigationCompleteEvent args)
+    {
+        if (m_movementController != args.NavMovementController)
+        {
+            return;
+        }
+
+        if (m_state == EnemyState.RunningAway)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void OnRequestDaytimeEvent(RequestDaytimeEvent args)
     {
+        if (m_state == EnemyState.Dead)
+        {
+            return;
+        }
+
         m_state = EnemyState.RunningAway;
         SetTarget(m_spawnPoint);
     }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SamOatesGames.Systems;
 using UnityEngine;
 
 [DefaultExecutionOrder(-100)]
@@ -11,6 +12,7 @@ public class NavMovementController : MonoBehaviour
     public float MovementSpeedMultiplier = 0.01f;
     public float SurfaceSpeedModifier = 0.1f;
 
+    private EventAggregator m_eventAggregator;
     private NavAgent m_navAgent;
     private Stack<Vector3> m_path;
 
@@ -22,6 +24,8 @@ public class NavMovementController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        m_eventAggregator = EventAggregator.GetInstance();
+
         m_navAgent = new NavAgent(CollisionMask);
         m_followingRoute = false;
     }
@@ -52,6 +56,7 @@ public class NavMovementController : MonoBehaviour
     {
         if (m_path.Count == 0)
         {
+            m_eventAggregator.Publish(new NavigationCompleteEvent(this, gameObject));
             m_followingRoute = false;
             return;
         }
