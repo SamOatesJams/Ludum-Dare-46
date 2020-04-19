@@ -4,6 +4,8 @@ using UnityEngine.Experimental.Rendering.Universal;
 [RequireComponent(typeof(Animator))]
 public class TorchLight : MonoBehaviour
 {
+    public bool StartLit = false;
+
     private Animator m_animator;
     private Light2D m_light;
 
@@ -26,6 +28,15 @@ public class TorchLight : MonoBehaviour
     {
         m_animator = GetComponent<Animator>();
         m_light = Light;
+
+        if (StartLit)
+        {
+            LightTorch();
+        }
+        else
+        {
+            ExtinguishTorch();
+        }
     }
 
     public void LightTorch()
