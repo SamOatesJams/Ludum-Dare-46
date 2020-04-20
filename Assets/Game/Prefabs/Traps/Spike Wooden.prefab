@@ -133,10 +133,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5be63ec102e91a945968a38ed67cb4cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 20
+  MaxHealth: 6
+  Type: 0
+  SurfaceData: {fileID: 11400000, guid: 23d5fec28613ff14fb39ce3a0fe0bf8b, type: 2}
   DamagePerTick: 2
   SelfDamagePerTick: 2
-  TicksPerDamageTick: 20
+  TicksPerDamageTick: 25
 --- !u!114 &9120246211125435773
 MonoBehaviour:
   m_ObjectHideFlags: 0

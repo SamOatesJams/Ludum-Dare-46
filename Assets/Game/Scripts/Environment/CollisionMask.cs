@@ -42,20 +42,26 @@ public class CollisionMask : MonoBehaviour
         return IsTileBlocked(ToTilemapLoc(location));
     }
 
-    public void SetTile(Vector3Int location, ItemType type)
+    public void SetTile(Vector3Int location, TileBase tile)
     {
-        var data = SurfaceData.GetSurfaceData($"CM_{type.ToString()}");
-        if (data == null)
-        {
-            return;
-        }
-
-        m_tilemap.SetTile(location, data.CollisionMapTile);
+        m_tilemap.SetTile(location, tile);
     }
 
-    public void SetTile(Vector3 location, ItemType type)
+    public void SetTile(Vector3 location, TileBase tile)
     {
-        SetTile(ToTilemapLoc(location), type);
+        SetTile(ToTilemapLoc(location), tile);
+    }
+
+    public TileBase SwapTile(Vector3Int location, TileBase tile)
+    {
+        var existingTile = m_tilemap.GetTile(location);
+        m_tilemap.SetTile(location, tile);
+        return existingTile;
+    }
+
+    public TileBase SwapTile(Vector3 location, TileBase tile)
+    {
+        return SwapTile(ToTilemapLoc(location), tile);
     }
 
     public float GetMovementMultiplier(Vector3Int location)

@@ -29,6 +29,7 @@ public class EnemySpawnPoint : SubscribableMonoBehaviour
     {
         m_eventAggregator = EventAggregator.GetInstance();
         m_eventAggregator.Subscribe<StartWaveEvent>(this, StartWave);
+        m_eventAggregator.Subscribe<RequestDaytimeEvent>(this, OnRequestDaytime);
     }
 
     public void StartWave(StartWaveEvent e)
@@ -70,5 +71,10 @@ public class EnemySpawnPoint : SubscribableMonoBehaviour
             m_remainingEnemies--;
             m_spawnTicksRemaining = Mathf.FloorToInt(EnemySpawnDelayTicks + (Random.value * RandomSpawnTicksMultiplier));
         }
+    }
+
+    private void OnRequestDaytime(RequestDaytimeEvent obj)
+    {
+        m_remainingEnemies = 0;
     }
 }

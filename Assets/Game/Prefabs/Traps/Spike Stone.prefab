@@ -135,8 +135,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 20
   Type: 1
-  DamagePerTick: 1
-  SelfDamagePerTick: 1
+  SurfaceData: {fileID: 11400000, guid: ca51bacb2f8bf4d418b9d3c252ccc199, type: 2}
+  DamagePerTick: 2
+  SelfDamagePerTick: 2
   TicksPerDamageTick: 20
 --- !u!114 &7592241173087851570
 MonoBehaviour:

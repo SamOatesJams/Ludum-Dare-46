@@ -209,8 +209,9 @@ public class PlayerController : SubscribableMonoBehaviour
             return;
         }
 
-        Instantiate(CurrentHeldItem.Prefab, tileCentre, Quaternion.identity, null);
-        CollisionMask.SetTile(mouseTile, CurrentHeldItem.Type);
+        var trapObj = Instantiate(CurrentHeldItem.Prefab, tileCentre, Quaternion.identity, null);
+        var itemData = trapObj.GetComponent<PlaceableItem>();
+        itemData.SwapCollisionMask(CollisionMask, mouseTile);
         m_eventAggregator.Publish(new PlayShiftedAudioEvent(AudioIds.PlaceItem, PlaceItemAudioClip, new Vector2(1.0f, 2.0f)));
 
         m_inventorySystem.UseItem(CurrentHeldItem.ResourceUsed, CurrentHeldItem.NumberOfResourcesUsed);

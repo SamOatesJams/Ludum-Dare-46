@@ -41,6 +41,7 @@ public class TrapSpikes : PlaceableItem
 
         if (Health <= 0)
         {
+            RestoreCollisionMask();
             Destroy(gameObject);
         }
     }
