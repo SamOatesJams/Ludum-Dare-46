@@ -31,6 +31,7 @@ public class EnemyController : SubscribableMonoBehaviour
     private EventAggregator m_eventAggregator;
     private NavMovementController m_movementController;
     private EnemyState m_state = EnemyState.Attacking;
+    private AnimationController m_animationController;
 
     private PlayerController m_player;
     private float m_lastAttack;
@@ -42,6 +43,7 @@ public class EnemyController : SubscribableMonoBehaviour
         m_eventAggregator.Subscribe<NavigationCompleteEvent>(this, OnNavigationCompleteEvent);
         m_eventAggregator.Subscribe<EnemyDeathEvent>(this, OnEnemyDeathEvent);
 
+        m_animationController = GetComponent<AnimationController>();
         m_movementController = GetComponent<NavMovementController>();
 
         Health = MaxHealth;
@@ -87,6 +89,7 @@ public class EnemyController : SubscribableMonoBehaviour
             return;
         }
 
+        m_animationController.SetPunchTarget(m_player.transform);
         m_player.DamagePlayer(EnemyAttackDamage);
         m_lastAttack = Time.time;
     }
@@ -96,6 +99,11 @@ public class EnemyController : SubscribableMonoBehaviour
         if (m_state == EnemyState.AttackingPlayer)
         {
             TryAttackingPlayer();
+        }
+
+        if (Time.time - m_lastAttack > EnemyAttackDelay)
+        {
+            m_animationController.SetPunchTarget(null);
         }
     }
 
