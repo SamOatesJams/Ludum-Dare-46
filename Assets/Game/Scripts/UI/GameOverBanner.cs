@@ -6,13 +6,17 @@ using UnityEngine.SceneManagement;
 public class GameOverBanner : SubscribableMonoBehaviour
 {
     public UnityEngine.UI.Image BannerImage;
+    public TMPro.TMP_Text WaveText;
     public AudioClip GameOverAudio;
 
     private EventAggregator m_eventAggregator;
+    private GameSession m_gameSession;
     private bool m_shown;
 
     public void Start()
     {
+        m_gameSession = GameSession.GetInstance();
+
         m_eventAggregator = EventAggregator.GetInstance();
         m_eventAggregator.Subscribe<GameOverEvent>(this, OnGameOverEvent);
 
@@ -27,6 +31,8 @@ public class GameOverBanner : SubscribableMonoBehaviour
         {
             return;
         }
+
+        WaveText.text = $"Survived {m_gameSession.Wave} {(m_gameSession.Wave == 1 ? "Wave" : "Waves")}";
 
         m_shown = true;
         var bannerTransform = (RectTransform)BannerImage.transform;

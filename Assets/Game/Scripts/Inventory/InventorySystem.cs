@@ -13,6 +13,7 @@ public class InventorySystem : UnitySingleton<InventorySystem>, ISubscribable
     {
         base.ResolveSystems();
         m_eventAggregator = EventAggregator.GetInstance();
+        m_eventAggregator.Subscribe<StartNewGameEvent>(this, OnStartNewGameEvent);
     }
 
     protected override void Awake()
@@ -35,6 +36,11 @@ public class InventorySystem : UnitySingleton<InventorySystem>, ISubscribable
         m_resourceCounts[ResourceType.Stone] = 10;
         m_resourceCounts[ResourceType.Metal] = 10;
         m_resourceCounts[ResourceType.Currency] = 0;
+    }
+
+    private void OnStartNewGameEvent(StartNewGameEvent args)
+    {
+        ResetResources();
     }
 
     public void AddItem(ResourceType type, int amount)
