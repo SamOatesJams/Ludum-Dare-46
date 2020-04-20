@@ -10,6 +10,7 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
 {
     public enum GameStage
     {
+        Cutscene,
         Daytime,
         Nighttime,
         GameOver
@@ -21,7 +22,7 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
     public Dictionary<GameStage, float> StageLength { get; } = new Dictionary<GameStage, float>
     {
         { GameStage.Daytime, 30.0f },
-        { GameStage.Nighttime, 45.0f }
+        { GameStage.Nighttime, 60.0f }
     };
 
     private EventAggregator m_eventAggregator;
@@ -37,7 +38,7 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
 
     public void Start()
     {
-        Stage = GameStage.Daytime;
+        Stage = GameStage.Cutscene;
         m_stageStartTime = Time.time;
 
         m_eventAggregator.Subscribe<StartNewGameEvent>(this, OnStartNewGameEvent);
@@ -52,6 +53,8 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
         m_eventAggregator.Subscribe<EndWaveEvent>(this, OnEndWaveEvent);
         m_eventAggregator.Subscribe<NavigationCompleteEvent>(this, OnNavigationCompleteEvent);
         m_eventAggregator.Subscribe<GameOverEvent>(this, OnGameOverEvent);
+
+        m_eventAggregator.Subscribe<TutorialCompleteEvent>(this, OnTutorialCompleteEvent);
     }
 
     public void OnDestroy()
@@ -72,6 +75,11 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
 
     public float GetStageProgress()
     {
+        if (Stage == GameStage.Cutscene)
+        {
+            return 0.0f;
+        }
+
         if (!StageLength.TryGetValue(Stage, out var stageLength))
         {
             return 0.0f;
@@ -93,6 +101,12 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
                 m_eventAggregator.Publish(new EndWaveEvent());
                 break;
         }
+    }
+
+    private void OnTutorialCompleteEvent(TutorialCompleteEvent args)
+    {
+        Stage = GameStage.Daytime;
+        m_stageStartTime = Time.time;
     }
 
     private void OnEndWaveEvent(EndWaveEvent args)
@@ -127,7 +141,8 @@ public class GameSession : UnitySingleton<GameSession>, ISubscribable
 
     private void OnStartNewGameEvent(StartNewGameEvent args)
     {
-        Stage = GameStage.Daytime;
+        Stage = GameStage.Cutscene;
+        
         m_stageStartTime = Time.time;
         m_numberOfLivingEnemies = 0;
         Wave = 0;

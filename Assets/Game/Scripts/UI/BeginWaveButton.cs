@@ -20,13 +20,23 @@ public class BeginWaveButton : SubscribableMonoBehaviour
         m_eventAggregator = EventAggregator.GetInstance();
         m_eventAggregator.Subscribe<RequestDaytimeEvent>(this, OnRequestDaytimeEvent);
         m_eventAggregator.Subscribe<RequestNighttimeEvent>(this, OnRequestNighttimeEvent);
+        m_eventAggregator.Subscribe<TutorialCompleteEvent>(this, OnTutorialCompleteEvent);
 
-        StartCoroutine(MoveButton((RectTransform)transform, 1.0f, m_visiblePositionX));
+        var gameSession = GameSession.GetInstance();
+        if (gameSession.Stage != GameSession.GameStage.Cutscene)
+        {
+            StartCoroutine(MoveButton((RectTransform) transform, 1.0f, m_visiblePositionX));
+        }
     }
 
     public void OnClick()
     {
         m_eventAggregator.Publish(new RequestNighttimeEvent());
+    }
+
+    private void OnTutorialCompleteEvent(TutorialCompleteEvent obj)
+    {
+        StartCoroutine(MoveButton((RectTransform)transform, 1.0f, m_visiblePositionX));
     }
 
     private void OnRequestDaytimeEvent(RequestDaytimeEvent args)
