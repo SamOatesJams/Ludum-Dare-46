@@ -3,7 +3,7 @@ using SamOatesGames.Systems;
 using UnityEngine;
 
 [RequireComponent(typeof(NavMovementController))]
-public class EnemyController : SubscribableMonoBehaviour
+public class EnemyController : EntityController
 {
     public enum EnemyState
     {
@@ -13,17 +13,19 @@ public class EnemyController : SubscribableMonoBehaviour
         AttackingPlayer,
     }
 
-    public double Health { get; private set; }
     public EnemyState State => m_state;
 
+    [Header("Attack settings")]
     public LayerMask PlayerLayer;
     public float EnemyVisionRange = 2.0f;
     public float EnemyAttackRange = 1.0f;
     public float EnemyAttackDelay = 1.0f;
     public double EnemyAttackDamage = 2.0f;
 
-    public double MaxHealth = 20.0;
+    [Header("Children")]
     public GameObject ShadowBlob;
+
+    [Header("Audio")]
     public AudioClip[] AttackAudioClips;
     public AudioClip[] HurtAudioClips;
 

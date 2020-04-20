@@ -9,13 +9,9 @@ public enum PlayerType
 };
 
 [RequireComponent(typeof(NavMovementController), typeof(PlayerInput))]
-public class PlayerController : SubscribableMonoBehaviour
+public class PlayerController : EntityController
 {
     public PlayerType PlayerType;
-
-    [Header("Health")]
-    public double MaxHealth = 20.0f;
-    public double Health { get; private set; }
 
     [Header("Item placement")]
     public float MaxPlacementDistance = 1.5f;
