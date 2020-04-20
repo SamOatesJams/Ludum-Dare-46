@@ -33,7 +33,7 @@ public class EnemyController : SubscribableMonoBehaviour
     private EnemyState m_state = EnemyState.Attacking;
     private AnimationController m_animationController;
 
-    private PlayerController m_player;
+    private PlayerController m_attackingPlayer;
     private float m_lastAttack;
 
     void Start()
@@ -42,7 +42,8 @@ public class EnemyController : SubscribableMonoBehaviour
         m_eventAggregator.Subscribe<RequestDaytimeEvent>(this, OnRequestDaytimeEvent);
         m_eventAggregator.Subscribe<NavigationCompleteEvent>(this, OnNavigationCompleteEvent);
         m_eventAggregator.Subscribe<EnemyDeathEvent>(this, OnEnemyDeathEvent);
-
+        m_eventAggregator.Subscribe<PlayerDiedEvent>(this, OnPlayerDiedEvent);
+        
         m_animationController = GetComponent<AnimationController>();
         m_movementController = GetComponent<NavMovementController>();
 
@@ -63,7 +64,7 @@ public class EnemyController : SubscribableMonoBehaviour
         }
 
         m_state = EnemyState.AttackingPlayer;
-        m_player = player;
+        m_attackingPlayer = player;
 
         m_movementController.StopNavigation();
         DamageEnemy(damage);
@@ -71,9 +72,10 @@ public class EnemyController : SubscribableMonoBehaviour
 
     private void TryAttackingPlayer()
     {
-        var distance = Vector3.Distance(transform.position, m_player.transform.position);
+        var distance = Vector3.Distance(transform.position, m_attackingPlayer.transform.position);
         if (distance > EnemyVisionRange)
         {
+            m_attackingPlayer = null;
             m_state = EnemyState.Attacking;
             m_movementController.ContinueNavigation();
             return;
@@ -89,8 +91,8 @@ public class EnemyController : SubscribableMonoBehaviour
             return;
         }
 
-        m_animationController.SetPunchTarget(m_player.transform);
-        m_player.DamagePlayer(EnemyAttackDamage);
+        m_animationController.SetPunchTarget(m_attackingPlayer.transform);
+        m_attackingPlayer.DamagePlayer(EnemyAttackDamage);
         m_lastAttack = Time.time;
     }
 
@@ -116,6 +118,19 @@ public class EnemyController : SubscribableMonoBehaviour
 
         m_state = EnemyState.Dead;
         StartCoroutine(DestroyDeadPlayer());
+    }
+
+    private void OnPlayerDiedEvent(PlayerDiedEvent args)
+    {
+        if (args.Player != m_attackingPlayer)
+        {
+            return;
+        }
+
+        m_attackingPlayer = null;
+        m_state = EnemyState.Attacking;
+        m_movementController.ContinueNavigation();
+        m_animationController.SetPunchTarget(null);
     }
 
     private IEnumerator DestroyDeadPlayer()

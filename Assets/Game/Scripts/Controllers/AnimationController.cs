@@ -20,11 +20,22 @@ public class AnimationController : SubscribableMonoBehaviour
     {
         var eventAggregator = EventAggregator.GetInstance();
         eventAggregator.Subscribe<EnemyDeathEvent>(this, OnEnemyDeathEvent);
-
+        eventAggregator.Subscribe<PlayerDiedEvent>(this, OnPlayerDiedEvent);
+        
         m_animator = GetComponent<Animator>();
         m_renderer = GetComponent<SpriteRenderer>();
 
         m_lastPosition = transform.position;
+    }
+
+    private void OnPlayerDiedEvent(PlayerDiedEvent args)
+    {
+        if (args.Player.gameObject != gameObject)
+        {
+            return;
+        }
+
+        m_animator.SetBool(IsDeadAnimationBool, true);
     }
 
     private void OnEnemyDeathEvent(EnemyDeathEvent args)

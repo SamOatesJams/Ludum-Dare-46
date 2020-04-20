@@ -269,6 +269,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20d0cefd383808244a566e9b2d3627c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  EnemyVisionRange: 1.5
+  EnemyAttackRange: 1.5
+  EnemyAttackDelay: 1
+  EnemyAttackDamage: 2
   MaxHealth: 3
   ShadowBlob: {fileID: 7718512746908688876}
   HurtAudioClip: {fileID: 8300000, guid: 5e3e3260ea7fb944fa19a15046815ebc, type: 3}

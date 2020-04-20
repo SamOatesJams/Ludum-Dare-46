@@ -109,6 +109,7 @@ public class PlayerController : SubscribableMonoBehaviour
 
         if (Health <= 0)
         {
+            m_eventAggregator.Publish(new PlayerDiedEvent(this));
             m_eventAggregator.Publish(new GameOverEvent());
             m_active = false;
         }
