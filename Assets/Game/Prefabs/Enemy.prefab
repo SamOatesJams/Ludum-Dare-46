@@ -34,7 +34,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -10, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2688733545792839680
 GameObject:
@@ -95,7 +95,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 32767
   m_TargetDisplay: 0
 --- !u!114 &2041294522133632759
 MonoBehaviour:
@@ -394,7 +394,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 10, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8848101295646729263
 CanvasRenderer:
@@ -654,14 +654,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20d0cefd383808244a566e9b2d3627c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 10
+  MaxHealth: 6
   PlayerLayer:
     serializedVersion: 2
     m_Bits: 0
   EnemyVisionRange: 2.5
   EnemyAttackRange: 1.5
   EnemyAttackDelay: 1
-  EnemyAttackDamage: 2
+  EnemyAttackDamage: 1
   ShadowBlob: {fileID: 7718512746908688876}
   AttackAudioClips:
   - {fileID: 8300000, guid: ef727482929a33a4f91bb91df273f61c, type: 3}

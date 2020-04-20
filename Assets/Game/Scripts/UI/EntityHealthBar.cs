@@ -9,6 +9,10 @@ public class EntityHealthBar : MonoBehaviour
     void FixedUpdate()
     {
         Slider.value = (float)(EntityTarget.Health / EntityTarget.MaxHealth);
-        Debug.Log($"{EntityTarget.Health} {EntityTarget.MaxHealth} {Slider.value}");
+
+        if (EntityTarget.Health <= 0.0f)
+        {
+            Slider.gameObject.SetActive(false);
+        }
     }
 }
