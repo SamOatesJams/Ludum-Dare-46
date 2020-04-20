@@ -1,6 +1,8 @@
 ﻿using SamOatesGames.Systems;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 public enum PlayerType
 {
@@ -11,6 +13,9 @@ public enum PlayerType
 [RequireComponent(typeof(NavMovementController), typeof(PlayerInput))]
 public class PlayerController : EntityController
 {
+    public float HealthRegenAmount = 0.1f;
+
+    [Header("Player Data")]
     public PlayerType PlayerType;
 
     [Header("Item placement")]
@@ -154,6 +159,8 @@ public class PlayerController : EntityController
                 NavigateToTarget();
                 m_active = false;
                 m_playerInput.DeactivateInput();
+
+                Health += Math.Max(HealthRegenAmount * MaxHealth, MaxHealth);
                 break;
         }
     }
