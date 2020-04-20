@@ -7,7 +7,9 @@ public class AudioManager : UnitySingleton<AudioManager>, ISubscribable
 {
     private EventAggregator m_eventAggregator;
     private readonly Dictionary<int, AudioSource> m_audioSourceMap = new Dictionary<int, AudioSource>();
-    
+
+    public bool AudioEnable { get; private set; } = true;
+
     public override void ResolveSystems()
     {
         base.ResolveSystems();
@@ -25,6 +27,29 @@ public class AudioManager : UnitySingleton<AudioManager>, ISubscribable
         }
     }
 
+    public void ToggleAudio()
+    {
+        AudioEnable = !AudioEnable;
+
+        if (AudioEnable)
+        {
+            foreach (var audioSource in m_audioSourceMap.Values)
+            {
+                if (audioSource.loop)
+                {
+                    audioSource.Play();
+                }
+            }
+        }
+        else
+        {
+            foreach (var audioSource in m_audioSourceMap.Values)
+            {
+                audioSource.Stop();
+            }
+        }
+    }
+
     private void HandlePlayAudioEvent(PlayAudioEvent audioEvent)
     {
         if (!m_audioSourceMap.TryGetValue(audioEvent.AudioId, out var audioSource))
@@ -36,7 +61,11 @@ public class AudioManager : UnitySingleton<AudioManager>, ISubscribable
         audioSource.clip = audioEvent.AudioClip;
         audioSource.volume = audioEvent.VolumeScale; // TODO: Multiply by options volume
         audioSource.loop = audioEvent.Loop;
-        audioSource.Play();
+
+        if (AudioEnable)
+        {
+            audioSource.Play();
+        }
     }
 
     private void HandlePlayShiftedAudioEvent(PlayShiftedAudioEvent audioEvent)
@@ -51,7 +80,11 @@ public class AudioManager : UnitySingleton<AudioManager>, ISubscribable
         audioSource.volume = audioEvent.Volume; // TODO: Multiply by options volume
         audioSource.loop = false;
         audioSource.pitch = Random.Range(audioEvent.PitchRange.x, audioEvent.PitchRange.y);
-        audioSource.Play();
+
+        if (AudioEnable)
+        {
+            audioSource.Play();
+        }
     }
 
     private void HandleStopAudioEvent(StopAudioEvent audioEvent)
