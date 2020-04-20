@@ -9,18 +9,26 @@ public class GameOverBanner : SubscribableMonoBehaviour
     public AudioClip GameOverAudio;
 
     private EventAggregator m_eventAggregator;
+    private bool m_shown;
 
     public void Start()
     {
         m_eventAggregator = EventAggregator.GetInstance();
         m_eventAggregator.Subscribe<GameOverEvent>(this, OnGameOverEvent);
 
+        m_shown = false;
         var bannerTransform = (RectTransform)BannerImage.transform;
         bannerTransform.anchoredPosition = new Vector2(bannerTransform.anchoredPosition.x, 0.0f);
     }
 
     private void OnGameOverEvent(GameOverEvent args)
     {
+        if (m_shown)
+        {
+            return;
+        }
+
+        m_shown = true;
         var bannerTransform = (RectTransform)BannerImage.transform;
         StartCoroutine(MoveBanner(bannerTransform, bannerTransform.anchoredPosition.y, bannerTransform.sizeDelta.y));
     }

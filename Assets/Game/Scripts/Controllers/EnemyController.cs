@@ -55,7 +55,7 @@ public class EnemyController : SubscribableMonoBehaviour
 
     public void PlayerAttack(PlayerController player, double damage)
     {
-        if (m_state != EnemyState.Attacking)
+        if (m_state != EnemyState.Attacking && m_state != EnemyState.AttackingPlayer)
         {
             return;
         }
