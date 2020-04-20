@@ -225,7 +225,12 @@ MonoBehaviour:
   AttackLayerMask:
     serializedVersion: 2
     m_Bits: 256
-  AttackAudioClip: {fileID: 8300000, guid: a99e83b73b687a64c9058ff5188f8cf1, type: 3}
+  AttackAudioClips:
+  - {fileID: 8300000, guid: a99e83b73b687a64c9058ff5188f8cf1, type: 3}
+  - {fileID: 8300000, guid: 4df084b8f5836a04c939529914a0612a, type: 3}
+  HurtAudioClips:
+  - {fileID: 8300000, guid: cf7be8ccf1c4ac94db45389b17c8d1ea, type: 3}
+  - {fileID: 8300000, guid: 864d29807d380b746baad2d7579e5b0c, type: 3}
   Target: {fileID: 0}
   CollisionMask: {fileID: 0}
   PlaceItemAudioClip: {fileID: 8300000, guid: b15b68fda6de91d408909b7a2f32b72d, type: 3}

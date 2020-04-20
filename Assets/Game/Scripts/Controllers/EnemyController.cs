@@ -24,7 +24,8 @@ public class EnemyController : SubscribableMonoBehaviour
 
     public double MaxHealth = 20.0;
     public GameObject ShadowBlob;
-    public AudioClip HurtAudioClip;
+    public AudioClip[] AttackAudioClips;
+    public AudioClip[] HurtAudioClips;
 
     private Vector3? m_target;
     private Vector3 m_spawnPoint;
@@ -76,8 +77,12 @@ public class EnemyController : SubscribableMonoBehaviour
         if (distance > EnemyVisionRange)
         {
             m_attackingPlayer = null;
-            m_state = EnemyState.Attacking;
-            m_movementController.ContinueNavigation();
+            m_state = m_state == EnemyState.AttackingPlayer ? EnemyState.Attacking : m_state;
+
+            if (m_state != EnemyState.Dead)
+            {
+                m_movementController.ContinueNavigation();
+            }
             return;
         }
 
@@ -90,6 +95,12 @@ public class EnemyController : SubscribableMonoBehaviour
         {
             return;
         }
+
+        m_eventAggregator.Publish(new PlayShiftedAudioEvent(
+            AudioIds.Villager + Random.Range(100, 110),
+            AttackAudioClips[Random.Range(0, AttackAudioClips.Length)],
+            new Vector2(0.75f, 1.2f),
+            0.75f));
 
         m_animationController.SetPunchTarget(m_attackingPlayer.transform);
         m_attackingPlayer.DamagePlayer(EnemyAttackDamage);
@@ -128,9 +139,13 @@ public class EnemyController : SubscribableMonoBehaviour
         }
 
         m_attackingPlayer = null;
-        m_state = EnemyState.Attacking;
-        m_movementController.ContinueNavigation();
+        m_state = m_state == EnemyState.AttackingPlayer ? EnemyState.Attacking : m_state;
         m_animationController.SetPunchTarget(null);
+
+        if (m_state != EnemyState.Dead)
+        {
+            m_movementController.ContinueNavigation();
+        }
     }
 
     private IEnumerator DestroyDeadPlayer()
@@ -192,7 +207,7 @@ public class EnemyController : SubscribableMonoBehaviour
         Health -= damage;
         m_eventAggregator.Publish(new PlayShiftedAudioEvent(
             AudioIds.Villager + Random.Range(100, 110),
-            HurtAudioClip,
+            HurtAudioClips[Random.Range(0, HurtAudioClips.Length)],
             new Vector2(0.75f, 1.2f),
             0.75f));
 

@@ -29,7 +29,8 @@ public class PlayerController : SubscribableMonoBehaviour
     public double AttackRange = 1.0;
     public double AttackDelay = 1.0;
     public LayerMask AttackLayerMask;
-    public AudioClip AttackAudioClip;
+    public AudioClip[] AttackAudioClips;
+    public AudioClip[] HurtAudioClips;
 
     [Header("World References")]
     public Transform Target;
@@ -106,6 +107,12 @@ public class PlayerController : SubscribableMonoBehaviour
     public void DamagePlayer(double amount)
     {
         Health -= amount;
+
+        m_eventAggregator.Publish(new PlayShiftedAudioEvent(
+            AudioIds.MonsterAttack,
+            HurtAudioClips[Random.Range(0, HurtAudioClips.Length)],
+            new Vector2(0.5f, 1.0f),
+            0.75f));
 
         if (Health <= 0)
         {
@@ -259,7 +266,7 @@ public class PlayerController : SubscribableMonoBehaviour
         enemy.PlayerAttack(this, AttackDamage);
         m_eventAggregator.Publish(new PlayShiftedAudioEvent(
             AudioIds.MonsterAttack, 
-            AttackAudioClip,
+            AttackAudioClips[Random.Range(0, AttackAudioClips.Length)],
             new Vector2(0.5f, 1.0f), 
             0.75f));
 

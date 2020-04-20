@@ -278,7 +278,12 @@ MonoBehaviour:
   EnemyAttackDamage: 2
   MaxHealth: 3
   ShadowBlob: {fileID: 7718512746908688876}
-  HurtAudioClip: {fileID: 8300000, guid: 5e3e3260ea7fb944fa19a15046815ebc, type: 3}
+  AttackAudioClips:
+  - {fileID: 8300000, guid: ef727482929a33a4f91bb91df273f61c, type: 3}
+  - {fileID: 8300000, guid: 9955acba4f9d2a74c9787cc2df8f84de, type: 3}
+  HurtAudioClips:
+  - {fileID: 8300000, guid: 5e3e3260ea7fb944fa19a15046815ebc, type: 3}
+  - {fileID: 8300000, guid: bde9410dd27f7d94da34e28de29a9d56, type: 3}
 --- !u!114 &4539775506968586777
 MonoBehaviour:
   m_ObjectHideFlags: 0
