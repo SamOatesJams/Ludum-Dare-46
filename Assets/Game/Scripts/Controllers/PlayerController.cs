@@ -160,7 +160,7 @@ public class PlayerController : EntityController
                 m_active = false;
                 m_playerInput.DeactivateInput();
 
-                Health += Math.Max(HealthRegenAmount * MaxHealth, MaxHealth);
+                Health = Math.Max(Health + (HealthRegenAmount * MaxHealth), MaxHealth);
                 break;
         }
     }
