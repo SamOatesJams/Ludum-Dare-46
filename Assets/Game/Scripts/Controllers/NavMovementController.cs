@@ -43,6 +43,16 @@ public class NavMovementController : MonoBehaviour
         m_followingRoute = false;
     }
 
+    public void ContinueNavigation()
+    {
+        if (m_path.Count <= 0)
+        {
+            return;
+        }
+
+        m_followingRoute = true;
+    }
+
     public void RecalculatePath(Vector3 target)
     {
         var position = new Vector3Int(Mathf.FloorToInt(transform.position.x), Mathf.FloorToInt(transform.position.y), 0);

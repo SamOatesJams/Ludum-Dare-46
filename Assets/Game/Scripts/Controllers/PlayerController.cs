@@ -255,7 +255,7 @@ public class PlayerController : SubscribableMonoBehaviour
         }
 
         Debug.Log("Attacking enemy");
-        enemy.DamageEnemy(AttackDamage);
+        enemy.PlayerAttack(this, AttackDamage);
         m_eventAggregator.Publish(new PlayShiftedAudioEvent(
             AudioIds.MonsterAttack, 
             AttackAudioClip,

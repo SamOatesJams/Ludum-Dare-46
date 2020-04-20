@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3317744511073937072}
   - component: {fileID: 1902743381417458292}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shadow Blob
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 8381857615956661590}
   - component: {fileID: 8056784868882630385}
   - component: {fileID: 1050695786388477143}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Monster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -217,8 +217,7 @@ MonoBehaviour:
   PlayerType: 1
   MaxHealth: 20
   MaxPlacementDistance: 2
-  CurrentHeldItem: {fileID: 7024234245917451659, guid: dea88a52412695144b90c56f9e6474b6,
-    type: 3}
+  CurrentHeldItem: {fileID: 0}
   MovementSpeedModififer: 1
   AttackDamage: 1
   AttackRange: 2
@@ -226,10 +225,16 @@ MonoBehaviour:
   AttackLayerMask:
     serializedVersion: 2
     m_Bits: 256
+  AttackAudioClip: {fileID: 8300000, guid: a99e83b73b687a64c9058ff5188f8cf1, type: 3}
   Target: {fileID: 0}
   CollisionMask: {fileID: 0}
-  PlaceItemAudioClip: {fileID: 0}
-  FailedPlaceItemAudioClip: {fileID: 0}
+  PlaceItemAudioClip: {fileID: 8300000, guid: b15b68fda6de91d408909b7a2f32b72d, type: 3}
+  FailedPlaceItemAudioClip: {fileID: 8300000, guid: 83e2ab3d28e14df4486a5da5af6989ca,
+    type: 3}
+  NotEnoughResourcesAudioClip: {fileID: 8300000, guid: 5fbb373d1720f684c9b702bf1de9224e,
+    type: 3}
+  PickupItemAudioClip: {fileID: 8300000, guid: b16052c946b213e4989b55e045b0486a, type: 3}
+  WaveCompleteAudioClips: []
 --- !u!114 &8381857615956661590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,7 +261,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
+  m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: Monster
   m_SplitScreenIndex: -1

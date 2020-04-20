@@ -9,11 +9,18 @@ public class EnemyController : SubscribableMonoBehaviour
     {
         Attacking,
         RunningAway,
-        Dead
+        Dead,
+        AttackingPlayer,
     }
 
     public double Health { get; private set; }
     public EnemyState State => m_state;
+
+    public LayerMask PlayerLayer;
+    public float EnemyVisionRange = 2.0f;
+    public float EnemyAttackRange = 1.0f;
+    public float EnemyAttackDelay = 1.0f;
+    public double EnemyAttackDamage = 2.0f;
 
     public double MaxHealth = 20.0;
     public GameObject ShadowBlob;
@@ -24,6 +31,9 @@ public class EnemyController : SubscribableMonoBehaviour
     private EventAggregator m_eventAggregator;
     private NavMovementController m_movementController;
     private EnemyState m_state = EnemyState.Attacking;
+
+    private PlayerController m_player;
+    private float m_lastAttack;
 
     void Start()
     {
@@ -40,6 +50,52 @@ public class EnemyController : SubscribableMonoBehaviour
         if (m_target != null)
         {
             m_movementController.NavigateTo(m_target.Value);
+        }
+    }
+
+    public void PlayerAttack(PlayerController player, double damage)
+    {
+        if (m_state != EnemyState.Attacking)
+        {
+            return;
+        }
+
+        m_state = EnemyState.AttackingPlayer;
+        m_player = player;
+
+        m_movementController.StopNavigation();
+        DamageEnemy(damage);
+    }
+
+    private void TryAttackingPlayer()
+    {
+        var distance = Vector3.Distance(transform.position, m_player.transform.position);
+        if (distance > EnemyVisionRange)
+        {
+            m_state = EnemyState.Attacking;
+            m_movementController.ContinueNavigation();
+            return;
+        }
+
+        if (distance > EnemyAttackRange)
+        {
+            return;
+        }
+
+        if (Time.time - m_lastAttack <= EnemyAttackDelay)
+        {
+            return;
+        }
+
+        m_player.DamagePlayer(EnemyAttackDamage);
+        m_lastAttack = Time.time;
+    }
+
+    void FixedUpdate()
+    {
+        if (m_state == EnemyState.AttackingPlayer)
+        {
+            TryAttackingPlayer();
         }
     }
 
