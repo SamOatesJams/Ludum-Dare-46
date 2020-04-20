@@ -117,6 +117,7 @@ public class DayNightLightingSystem : SubscribableMonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
+        valueAction(end);
         yield return null;
     }
 }

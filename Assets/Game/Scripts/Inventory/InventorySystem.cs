@@ -32,8 +32,8 @@ public class InventorySystem : UnitySingleton<InventorySystem>, ISubscribable
     public void ResetResources()
     {
         m_resourceCounts[ResourceType.Wood] = 10;
-        m_resourceCounts[ResourceType.Stone] = 2;
-        m_resourceCounts[ResourceType.Metal] = 1;
+        m_resourceCounts[ResourceType.Stone] = 10;
+        m_resourceCounts[ResourceType.Metal] = 10;
         m_resourceCounts[ResourceType.Currency] = 0;
     }
 

@@ -37,6 +37,8 @@ public class WaveBanner : SubscribableMonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
+        bannerTransform.anchoredPosition = new Vector2(bannerTransform.anchoredPosition.x, endY);
+
         yield return new WaitForSecondsRealtime(3.0f);
 
         time = 0.0f;
@@ -48,5 +50,7 @@ public class WaveBanner : SubscribableMonoBehaviour
             time += 0.01f;
             yield return new WaitForFixedUpdate();
         }
+
+        bannerTransform.anchoredPosition = new Vector2(bannerTransform.anchoredPosition.x, startY);
     }
 }

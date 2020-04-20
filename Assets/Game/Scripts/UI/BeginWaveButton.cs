@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class BeginWaveButton : SubscribableMonoBehaviour
 {
+    public float OffscreenX;
+    public float OnscreenX;
+
     private EventAggregator m_eventAggregator;
-    private float m_visiblePositionX;
-    private float m_offscreenPositionX;
 
     public void Start()
     {
         // Position offscreen to stat with
         var rectTransform = ((RectTransform) transform);
         var position = rectTransform.anchoredPosition;
-        m_visiblePositionX = position.x;
-        m_offscreenPositionX = rectTransform.sizeDelta.x;
-        rectTransform.anchoredPosition = new Vector2(m_offscreenPositionX, position.y);
+        rectTransform.anchoredPosition = new Vector2(OffscreenX, position.y);
 
         m_eventAggregator = EventAggregator.GetInstance();
         m_eventAggregator.Subscribe<RequestDaytimeEvent>(this, OnRequestDaytimeEvent);
@@ -25,7 +24,7 @@ public class BeginWaveButton : SubscribableMonoBehaviour
         var gameSession = GameSession.GetInstance();
         if (gameSession.Stage != GameSession.GameStage.Cutscene)
         {
-            StartCoroutine(MoveButton((RectTransform) transform, 1.0f, m_visiblePositionX));
+            StartCoroutine(MoveButton((RectTransform) transform, 1.0f, OnscreenX));
         }
     }
 
@@ -36,17 +35,17 @@ public class BeginWaveButton : SubscribableMonoBehaviour
 
     private void OnTutorialCompleteEvent(TutorialCompleteEvent obj)
     {
-        StartCoroutine(MoveButton((RectTransform)transform, 1.0f, m_visiblePositionX));
+        StartCoroutine(MoveButton((RectTransform)transform, 1.0f, OnscreenX));
     }
 
     private void OnRequestDaytimeEvent(RequestDaytimeEvent args)
     {
-        StartCoroutine(MoveButton((RectTransform) transform, 1.0f, m_visiblePositionX));
+        StartCoroutine(MoveButton((RectTransform) transform, 1.0f, OnscreenX));
     }
 
     private void OnRequestNighttimeEvent(RequestNighttimeEvent args)
     {
-        StartCoroutine(MoveButton((RectTransform)transform, 1.0f, m_offscreenPositionX));
+        StartCoroutine(MoveButton((RectTransform)transform, 1.0f, OffscreenX));
     }
 
     private IEnumerator MoveButton(RectTransform rectTransform, float delay, float targetX)
@@ -62,10 +61,11 @@ public class BeginWaveButton : SubscribableMonoBehaviour
             var value = Mathf.Lerp(startX, targetX, time);
             rectTransform.anchoredPosition = new Vector2(value, position.y);
 
-            time += 0.01f;
+            time += 0.04f;
             yield return new WaitForFixedUpdate();
         }
 
+        rectTransform.anchoredPosition = new Vector2(targetX, position.y);
         yield return null;
     }
 }

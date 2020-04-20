@@ -47,7 +47,8 @@ public class GameOverBanner : SubscribableMonoBehaviour
             time += 0.01f;
             yield return new WaitForFixedUpdate();
         }
-        
+
+        bannerTransform.anchoredPosition = new Vector2(bannerTransform.anchoredPosition.x, endY);
         yield return new WaitForSecondsRealtime(3.0f);
 
         SceneManager.LoadScene("Main Menu");

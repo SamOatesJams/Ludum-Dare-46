@@ -33,6 +33,9 @@ public class BootMenu : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
+        Logo.color = Color.white;
+        Text.color = Color.white;
+
         yield return new WaitForSecondsRealtime(ShowTime);
 
         time = 0.0f;
@@ -45,6 +48,9 @@ public class BootMenu : MonoBehaviour
             time += (0.01f * LerpScale);
             yield return new WaitForFixedUpdate();
         }
+
+        Logo.color = clearColor;
+        Text.color = clearColor;
 
         yield return new WaitForSecondsRealtime(1.0f);
 
