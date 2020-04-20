@@ -38,5 +38,8 @@ ScriptedImporter:
   - animationName: Death
     loopTime: 0
     about: "Animation Type:\tForward\r\nAnimation:\tFrom: 16; To: 18"
+  - animationName: Punch
+    loopTime: 1
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 19; To: 22"
   atlas: {instanceID: 0}
   importType: 0

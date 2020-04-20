@@ -5,6 +5,7 @@ using UnityEngine;
 public class AnimationController : SubscribableMonoBehaviour
 {
     private Vector3 m_lastPosition;
+    private Transform m_punchTarget;
 
     private Animator m_animator;
     private SpriteRenderer m_renderer;
@@ -13,6 +14,7 @@ public class AnimationController : SubscribableMonoBehaviour
     public static readonly int WalkDownAnimationBool = Animator.StringToHash("WalkDown");
     public static readonly int WalkSideAnimationBool = Animator.StringToHash("WalkSide");
     public static readonly int IsDeadAnimationBool = Animator.StringToHash("IsDead");
+    public static readonly int PunchingAnimationBool = Animator.StringToHash("Punching");
 
     void Start()
     {
@@ -33,6 +35,11 @@ public class AnimationController : SubscribableMonoBehaviour
         }
 
         m_animator.SetBool(IsDeadAnimationBool, true);
+    }
+
+    public void SetPunchTarget(Transform punchTarget)
+    {
+        m_punchTarget = punchTarget;
     }
 
     // Update is called once per frame
@@ -75,6 +82,16 @@ public class AnimationController : SubscribableMonoBehaviour
         m_animator.SetBool(WalkUpAnimationBool, walkUp);
         m_animator.SetBool(WalkDownAnimationBool, walkDown);
         m_animator.SetBool(WalkSideAnimationBool, walkSide);
+
+        if (m_punchTarget != null)
+        {
+            m_renderer.flipX = transform.position.x < m_punchTarget.position.x;
+            m_animator.SetBool(PunchingAnimationBool, true);
+        }
+        else
+        {
+            m_animator.SetBool(PunchingAnimationBool, false);
+        }
 
         m_lastPosition = transform.position;
     }

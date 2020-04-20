@@ -56,10 +56,13 @@ public class PlayerController : SubscribableMonoBehaviour
     private SpriteRenderer m_placementPreview;
     private readonly Color m_disabledPreviewColor = new Color(1.0f, 1.0f, 1.0f, 0.25f);
 
+    private AnimationController m_animationController;
+
     void Start()
     {
         m_playerInput = GetComponent<PlayerInput>();
         m_navigationController = GetComponent<NavMovementController>();
+        m_animationController = GetComponent<AnimationController>();
 
         if (PlayerType == PlayerType.Scientist)
         {
@@ -183,6 +186,11 @@ public class PlayerController : SubscribableMonoBehaviour
         {
             HandleInput();
         }
+
+        if (Time.time - m_lastAttackTime > AttackDelay)
+        {
+            m_animationController.SetPunchTarget(null);
+        }
     }
 
     public void PlaceCurrentItem()
@@ -219,13 +227,13 @@ public class PlayerController : SubscribableMonoBehaviour
 
     public void Attack()
     {
-        var mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-
         // Delay between attacks
         if (Time.time - m_lastAttackTime <= AttackDelay)
         {
             return;
         }
+
+        var mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 
         // Get attacked enemy
         var ray = Physics2D.Raycast(mousePos, Vector2.zero, float.PositiveInfinity, AttackLayerMask);
@@ -240,8 +248,7 @@ public class PlayerController : SubscribableMonoBehaviour
             return;
         }
 
-        var gameobj = ray.transform.gameObject;
-        var enemy = gameobj.GetComponent<EnemyController>();
+        var enemy = ray.transform.GetComponent<EnemyController>();
         if (enemy == null)
         {
             return;
@@ -256,7 +263,8 @@ public class PlayerController : SubscribableMonoBehaviour
             0.75f));
 
         m_lastAttackTime = Time.time;
-        // TODO animation
+
+        m_animationController.SetPunchTarget(enemy.transform);
     }
 
     public void OnPlaceItem(InputValue value)
