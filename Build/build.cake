@@ -1,4 +1,4 @@
-#addin nuget:?package=Cake.Unity3D&version=0.7.0
+#addin nuget:?package=Cake.Unity3D&version=0.8.0
 
 var _target = Argument("target", "Build");
 var _platform = Argument("platform", "WIN64");
