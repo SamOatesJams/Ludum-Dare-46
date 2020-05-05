@@ -52,6 +52,13 @@ bool GetPlatformSettings(string platformKey, out string outputPath, out string o
       break;
     }
     
+    case "OSX":
+    {
+      platform = Unity3DBuildPlatform.StandaloneOSX;
+      outputPath = System.IO.Path.Combine(outputFolder, $"{_gameName}");
+      break;
+    }
+    
     default:
     {
       platform = Unity3DBuildPlatform.StandaloneWindows64;
